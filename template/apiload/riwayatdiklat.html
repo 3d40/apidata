@@ -1,0 +1,25 @@
+RIWAYAT DIKLAT
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Nama Diklat</th>
+        <th scope="col">Jenis Diklat</th>
+        <th scope="col">Tanggal Pelaksanaan</th>
+        <th scope="col">Tanggal Selesai</th>
+        <th scope="col">Status Dokumen</th>
+
+      </tr>
+    </thead>
+    <tbody>
+        {% for object in data %}
+        <th scope="row" >{{forloop.counter}}</th>
+        <td>{{object.title}}</td>
+        <td>{{object.field_tingkat_pendidikan}}</a></td>
+        <td>{{object.field_nama_pendidikan}}</td>
+        <td>{{object.field_tahun_lulus}}</td>
+        <td>{{object.moderation_state}}</td>
+      </tr>
+      {% endfor %}
+  </table>
+  {% include 'apiload/link.html' %}

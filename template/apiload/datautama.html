@@ -1,0 +1,6 @@
+    {% csrf_token %}
+    {{ form.as_p }}
+    <a href="{% url 'apiload:cari' %}" >Cari</a>
+    <a href="{% url 'apiload:rwpangkat' %}" >Pangkat</a>
+    <a href="{% url 'apiload:rwjabatan' %}" >Jabatan</a>
+    <a href="{% url 'apiload:rwpendidikan' %}" >Pendidikan</a>

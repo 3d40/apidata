@@ -1,0 +1,24 @@
+RIWAYAT PANGKAT
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Nama Jabatan</th>
+        <th scope="col">Jenis Jabatan</th>
+        <th scope="col">Terhitung Mulai Tanggal</th>
+        <th scope="col">Status Berkas</th>
+        <th scope="col">Aksi</th>
+
+      </tr>
+    </thead>
+    <tbody>
+        {% for object in data %}
+        <th scope="row" >{{forloop.counter}}</th>
+        <td>{{object.field_pangkat}}</td>
+        <td>{{object.field_golongan}}</a></td>
+        <td>{{object.field_tmt_golongan}}</td>
+        <td>{{object.moderation_state}}</td>
+      </tr>
+      {% endfor %}
+  </table>
+  {% include 'apiload/link.html' %}

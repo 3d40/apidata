@@ -1,0 +1,24 @@
+RIWAYAT JABATAN
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Jenis</th>
+        <th scope="col">Golongan</th>
+        <th scope="col">Terhtung Mulai Tanggal</th>
+        <th scope="col">Status Berkas</th>
+        <th scope="col">Aksi</th>
+
+      </tr>
+    </thead>
+    <tbody>
+        {% for object in data %}
+        <th scope="row" >{{forloop.counter}}</th>
+        <td>{{object.field_nama_jabatan}}</td>
+        <td>{{object.field_jns_jabatan}}</a></td>
+        <td>{{object.field_tmt_jabatan}}</td>
+        <td>{{object.moderation_state}}</td>
+      </tr>
+      {% endfor %}
+  </table>
+  {% include 'apiload/link.html' %}

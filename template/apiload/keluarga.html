@@ -1,0 +1,56 @@
+RIWAYAT KELUARGA
+
+  ISTRI/SUAMI
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Nama</th>
+        <th scope="col">Tanggal Lahir</th>
+        <th scope="col">Nomor Surat Nikah</th>
+        <th scope="col">Tanggal Nikah</th>
+        <th scope="col">Akta Nikah</th>
+        <th scope="col">Status Dokumen</th>
+        <th scope="col">Aksi</th>
+
+      </tr>
+    </thead>
+    <tbody>
+        {% for object in pasangan %}
+        <th scope="row" >{{forloop.counter}}</th>
+        <td>{{object.title}}</td>
+        <td>{{object.field_tanggal_lahir}}</a></td>
+        <td>{{object.field_nomor_akta_nikah}}</td>
+        <td>{{object.field_tanggal_menikah}}</td>
+        <td>{{object.field_file_akta_nikah}}</td>
+        <td>{{object.moderation_state}}</td>
+        <th scope="col"></th>
+      </tr>
+      {% endfor %}
+  </table>
+
+  ANAK
+  <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Nama Sekolah</th>
+          <th scope="col">Anak Ke</th>
+          <th scope="col">Status Anak</th>
+          <th scope="col">Status Dokumen</th>
+          <th scope="col">Aksi</th>
+  
+        </tr>
+      </thead>
+      <tbody>
+          {% for object in anak %}
+          <th scope="row" >{{forloop.counter}}</th>
+          <td>{{object.title}}</td>
+          <td>{{object.field_anak_ke}}</a></td>
+          <td>{{object.field_status_anak}}</td>
+          <td>{{object.moderation_state}}</td>
+          <td></td>
+        </tr>
+        {% endfor %}
+    </table>
+  {% include 'apiload/link.html' %}
