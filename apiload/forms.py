@@ -17,3 +17,12 @@ class DataPangkatForm(forms.Form):
     tmt = forms.CharField(label='Terhitung Mulai Tanggal', max_length=100)
     status = forms.CharField(label='Status Berkas', max_length=100)
 
+
+class FormKarisKarsu(forms.Form):
+    surat_pengantar = forms.FileField()
+    skpns = forms.BooleanField(label = 'Berkas PNS')
+    skcpns = forms.BooleanField(label= 'Berkas CPNS')
+
+
+
+

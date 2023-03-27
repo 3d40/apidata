@@ -32,14 +32,17 @@ def CariView(request):
         context = {
             'nama': json_pegawai[0]['field_nama'],
             'nip':nip,
-            'jabatan':json_pegawai[0]['field_jabatan_1'],
-            'pangkat':json_pegawai[0]['field_pangkat'],
+            'jabatan':json_pegawai[0]['field_jabatan'],
+            'pangkat':json_pegawai[0]['field_golongan'],
             'opd':json_pegawai[0]['field_perangkat_daerah'],
             'unitkerja':json_pegawai[0]['field_unit_kerja']
         }
         form = DataUtamaForm(initial=context)
+    #     return render(request,'apiload/dahsboard.html', {'form':form})
+    # return render(request, 'apiload/dahsboard.html  ',{'form':form})
         return render(request,'apiload/datautama.html', {'form':form})
-    return render(request, 'apiload/cari.html',{'form':form})
+    return render(request, 'apiload/cari.html', {'form':form})
+
 
 
 
@@ -64,7 +67,8 @@ def index(request: HttpRequest) -> HttpResponse:
     if request.user.is_authenticated:
         body = """
         <p>You logged in as <strong>%s</strong>.</p>
-        <p><a href="/cari">cari</a></p>
+        <p><a href="/cari">Karis Karsu</a></p>
+        <p><a href="/spthd">Surat Pernyataan Tidak Pernah Dijatuhi Hukuman Disiplin</a></p>
         <p><a href="/accounts/logout">Logout</a></p>
          """ % request.user.username
     else:
@@ -138,4 +142,18 @@ def RiwayatDisiplinView(request):
         }
     print(context)
     return render(request,'apiload/riwayatdisiplin.html', context)
+
+
+def LayananKarisKarsu(request):
+    form = FormKarisKarsu
+    nip = request.session['nip']
+    data = urlopen(pangkat + str(nip))
+    json_pegawai = json.load(data)
+    for data in json_pegawai :
+        print(data['field_golongan'])
+    context = {
+        'form':form,
+        'data':json_pegawai
+        }
+    return render(request,'apiload/kariskarsu.html', context)
 

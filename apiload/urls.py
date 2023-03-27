@@ -11,6 +11,9 @@ urlpatterns = [
     path('diklat', RiwayatDiklatView, name='rwdiklat'),
     path('pasangan', PasanganView, name='pasangan'),
     path('disiplin', RiwayatDisiplinView, name='disiplin'),
-    path('cari/', CariView, name='cari'),
+    path('cari', CariView, name='cari'),
+
+    #Layanan
+    path('kariskarsu', LayananKarisKarsu, name='kariskarsu'),
 ]
 
