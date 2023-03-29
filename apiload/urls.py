@@ -14,6 +14,6 @@ urlpatterns = [
     path('cari', CariView, name='cari'),
 
     #Layanan
-    path('kariskarsu', LayananKarisKarsu, name='kariskarsu'),
+    path('kariskarsu', LayananKarisKarsu, name='karisu'),
 ]
 

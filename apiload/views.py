@@ -1,13 +1,15 @@
+import datetime
+
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect, get_list_or_404,reverse
 from urllib.request import  urlopen, URLopener
 from .forms import *
 import json
 from . signals import *
+from .models import *
+from datetime import datetime
 
 
 from django.http import HttpRequest, HttpResponse
-from . import signals
-import ssl
 
 datapokok = "http://data.bkd.jambiprov.go.id/rest-data-pokok/"#1X
 displin = "http://data.bkd.jambiprov.go.id/rest-disiplin/"#2X
@@ -38,8 +40,8 @@ def CariView(request):
             'unitkerja':json_pegawai[0]['field_unit_kerja']
         }
         form = DataUtamaForm(initial=context)
-    #     return render(request,'apiload/dahsboard.html', {'form':form})
-    # return render(request, 'apiload/dahsboard.html  ',{'form':form})
+    #     return render(request,'apiload/index.html', {'form':form})
+    # return render(request, 'apiload/index.html  ',{'form':form})
         return render(request,'apiload/datautama.html', {'form':form})
     return render(request, 'apiload/cari.html', {'form':form})
 
@@ -47,34 +49,14 @@ def CariView(request):
 
 
 
-def index(request: HttpRequest) -> HttpResponse:
-    header = '''<!DOCTYPE html>
-<html>
-  <head>
-    <title>BONCES API</title>
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
-  </head>
-  <body>
-  <h1>TEST KONEKSI</h1>'''
-
-    footer = '''<p>Prakom BKD</p>
-    <ul>
-        <li><a href="http://data.bkd.jambiprov.go.id">Hompe Page</a></li>
-    </ul>
-  </body>
-</html>'''
-
+def index(request: HttpRequest):
     if request.user.is_authenticated:
-        body = """
-        <p>You logged in as <strong>%s</strong>.</p>
-        <p><a href="/cari">Karis Karsu</a></p>
-        <p><a href="/spthd">Surat Pernyataan Tidak Pernah Dijatuhi Hukuman Disiplin</a></p>
-        <p><a href="/accounts/logout">Logout</a></p>
-         """ % request.user.username
+        context = {
+            'user' : request.user,
+        }
+        return render(request, 'apiload/index.html', context)
     else:
-        body = '<p><a href="/accounts/login">Login</a></p>'
-
-    return HttpResponse(header + body + footer)
+        return redirect('cas_ng_login')
 
 def ping(request: HttpRequest) -> HttpResponse:
     return HttpResponse('pong', content_type="text/plain")
@@ -146,14 +128,28 @@ def RiwayatDisiplinView(request):
 
 def LayananKarisKarsu(request):
     form = FormKarisKarsu
-    nip = request.session['nip']
+    nip = request.user
     data = urlopen(pangkat + str(nip))
     json_pegawai = json.load(data)
-    for data in json_pegawai :
-        print(data['field_golongan'])
-    context = {
-        'form':form,
-        'data':json_pegawai
+    for x in json_pegawai :
+        ModelTRiwayatPangkat.objects.update_or_create(nama = x['field_pangkat'],orang = request.user,
+            simbol = x['field_golongan'],# tmt = datetime.strptime(x['field_tmt_golongan'], '%d-%m-%Y').date(),
+            tmt=x['field_tmt_golongan'], jenis = x['field_status_sk'], status = x['moderation_state'] )
+        context = {
+            'form':form,
+            'data':json_pegawai
+        }
+    lookpkt = ModelTRiwayatPangkat.objects.filter(orang = request.user)
+    for data in lookpkt:
+        idpkcpns = lookpkt.get(jenis = "CPNS", orang = request.user)
+        idpkpns = lookpkt.get(jenis = "PNS", orang = request.user, simbol = idpkcpns.simbol)
+        if idpkpns.status == "Valid" and idpkcpns.status == "Valid":
+            form = FormKarisKarsu(initial={'skpns':True, 'skcpns':True})
+        else:
+            return HttpResponse("Berkas Tidak Lengkap")
+        context = {
+            'form': form,
+            'data': json_pegawai
         }
     return render(request,'apiload/kariskarsu.html', context)
 

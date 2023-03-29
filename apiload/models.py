@@ -1,3 +1,18 @@
+import datetime
+
 from django.db import models
 
 # Create your models here.
+class ModelTRiwayatPangkat(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    orang = models.CharField(max_length=100 )
+    nama = models.CharField(max_length=100, null=True, blank=True)
+    jenis = models.CharField(max_length=100, null=True, blank=True)
+    tmt = models.CharField(max_length=20, null=True, blank=True)
+    status = models.CharField(max_length=100, null=True, blank=True)
+    simbol = models.CharField(max_length=100, null=True, blank=True)
+    class Meta:
+        managed = False
+        db_table = 't_riwayat_pangkat'
+    def __str__(self):
+        return str(self.nama)

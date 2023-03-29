@@ -26,7 +26,7 @@ SECRET_KEY = 'ee6w^p%4%$i!$gfyip)-@am&s^tq03lx1m4ko2m*+m8%qkgf5t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -134,7 +134,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'django_cas_ng.backends.CASBackend',
 )
-
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 CAS_SERVER_URL = 'http://data.bkd.jambiprov.go.id/cas/'
 CAS_LOGOUT_COMPLETELY = True
@@ -146,5 +146,4 @@ CAS_RESPONSE_CALLBACKS = (
 )
 
 CAS_GATEWAY = True
-
 CAS_PGT_FETCH_WAIT = False
