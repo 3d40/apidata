@@ -127,29 +127,54 @@ def RiwayatDisiplinView(request):
 
 
 def LayananKarisKarsu(request):
-    form = FormKarisKarsu
+    formpegawai = FormKarisKarsu
+    formpasangan = FormIstri
     nip = request.user
     data = urlopen(pangkat + str(nip))
     json_pegawai = json.load(data)
+    datapasangan = urlopen(pasangan + str(nip))
+    json_pasangan = json.load(datapasangan)
     for x in json_pegawai :
-        ModelTRiwayatPangkat.objects.update_or_create(nama = x['field_pangkat'],orang = request.user,
+        ModelTRiwayatPangkat.objects.update_or_create(
+            nama = x['field_pangkat'],
+            orang = request.user,
             simbol = x['field_golongan'],# tmt = datetime.strptime(x['field_tmt_golongan'], '%d-%m-%Y').date(),
-            tmt=x['field_tmt_golongan'], jenis = x['field_status_sk'], status = x['moderation_state'] )
-        context = {
-            'form':form,
-            'data':json_pegawai
-        }
+            tmt=x['field_tmt_golongan'], 
+            jenis = x['field_status_sk'], 
+            status = x['moderation_state'] 
+            )
+    for y in json_pasangan :
+        ModelTPasangan.objects.update_or_create(
+            nama = y['title'], 
+            orang = request.user, 
+            akta = y['field_nomor_akta_nikah'], 
+            status_nikah = y['field_status_pernikahan'], 
+            status = y['moderation_state'],
+            tgl_nikah = y['field_tanggal_menikah']
+            )
+    
     lookpkt = ModelTRiwayatPangkat.objects.filter(orang = request.user)
-    for data in lookpkt:
+    lookpasangan = ModelTPasangan.objects.filter(orang = request.user)
+
+    for pkt in lookpkt:
         idpkcpns = lookpkt.get(jenis = "CPNS", orang = request.user)
         idpkpns = lookpkt.get(jenis = "PNS", orang = request.user, simbol = idpkcpns.simbol)
-        if idpkpns.status == "Valid" and idpkcpns.status == "Valid":
-            form = FormKarisKarsu(initial={'skpns':True, 'skcpns':True})
+        idpkakhir = lookpkt.last()
+        if idpkpns.status == "Valid" and idpkcpns.status == "Valid" and idpkakhir.status == "Valid":
+            formpegawai = FormKarisKarsu(initial={'skpns':True, 'skcpns':True, 'skakhir':True})
         else:
             return HttpResponse("Berkas Tidak Lengkap")
-        context = {
-            'form': form,
-            'data': json_pegawai
-        }
+
+        for bojo in lookpasangan:
+            getpasangan = lookpasangan.get( orang = request.user)
+            if getpasangan.status == "Valid" :
+                formpasangan = FormIstri(initial={'status':True})
+            else: 
+                return HttpResponse("Berkas Tidak Lengkap")
+
+        context= {
+                'formpegawai':formpegawai,
+                'formpasangan':formpasangan, 
+            }
     return render(request,'apiload/kariskarsu.html', context)
 

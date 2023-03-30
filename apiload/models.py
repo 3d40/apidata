@@ -16,3 +16,30 @@ class ModelTRiwayatPangkat(models.Model):
         db_table = 't_riwayat_pangkat'
     def __str__(self):
         return str(self.nama)
+
+class ModelTPasangan(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    nama = models.CharField(max_length=100 )
+    orang = models.CharField(max_length=100 )
+    akta = models.CharField(max_length=100, null=True, blank=True)
+    tgl_nikah = models.CharField(max_length=100, null=True, blank=True)
+    status_nikah = models.CharField(max_length=100, null=True, blank=True)
+    status = models.CharField(max_length=100, null=True, blank=True)
+    class Meta:
+        managed = False
+        db_table = 't_pasangan'
+    def __str__(self):
+        return str(self.nama)
+
+
+# class ModelTAnak(models.Model):
+#     id = models.BigAutoField(primary_key=True)
+#     orang = models.CharField(max_length=100 )
+#     akta = models.CharField(max_length=100, null=True, blank=True)
+#     status_nikah = models.CharField(max_length=100, null=True, blank=True)
+#     status = models.CharField(max_length=100, null=True, blank=True)
+#     class Meta:
+#         managed = False
+#         db_table = 't_anak'
+#     def __str__(self):
+#         return str(self.nama)

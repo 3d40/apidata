@@ -22,7 +22,10 @@ class FormKarisKarsu(forms.Form):
     surat_pengantar = forms.FileField()
     skpns = forms.BooleanField(label = 'Berkas PNS')
     skcpns = forms.BooleanField(label= 'Berkas CPNS')
+    skakhir = forms.BooleanField(label= 'Berkas Pangkat Terakhir')
 
+class FormIstri(forms.Form):
+    status = forms.BooleanField(label = 'Akta Nikah')
 
 
 
