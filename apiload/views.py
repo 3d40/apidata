@@ -7,6 +7,7 @@ import json
 from . signals import *
 from .models import *
 from datetime import datetime
+from django.core.exceptions import ObjectDoesNotExist
 
 
 from django.http import HttpRequest, HttpResponse
@@ -157,14 +158,25 @@ def LayananKarisKarsu(request):
     lookpasangan = ModelTPasangan.objects.filter(orang = request.user)
 
     for pkt in lookpkt:
-        idpkcpns = lookpkt.get(jenis = "CPNS", orang = request.user)
-        idpkpns = lookpkt.get(jenis = "PNS", orang = request.user, simbol = idpkcpns.simbol)
-        idpkakhir = lookpkt.last()
+        try:
+            idpkcpns = ModelTRiwayatPangkat.objects.get(jenis = "CPNS", orang = request.user)
+        except ObjectDoesNotExist:
+            return HttpResponse("Berkas Tidak Lengkap")
+
+        try:
+            idpkpns = ModelTRiwayatPangkat.objects.get(jenis = "PNS", simbol = x['field_golongan'], orang = request.user)
+        except ObjectDoesNotExist:
+            return HttpResponse("Berkas Tidak Lengkap")
+        
+        try:
+            idpkakhir = lookpkt.last()
+        except ObjectDoesNotExist:
+            return HttpResponse("Berkas Tidak Lengkap")
         if idpkpns.status == "Valid" and idpkcpns.status == "Valid" and idpkakhir.status == "Valid":
             formpegawai = FormKarisKarsu(initial={'skpns':True, 'skcpns':True, 'skakhir':True})
         else:
             return HttpResponse("Berkas Tidak Lengkap")
-
+        
         for bojo in lookpasangan:
             getpasangan = lookpasangan.get( orang = request.user)
             if getpasangan.status == "Valid" :
