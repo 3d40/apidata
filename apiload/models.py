@@ -31,6 +31,17 @@ class ModelTPasangan(models.Model):
     def __str__(self):
         return str(self.nama)
 
+class ModelTOpd(models.Model):
+    ids =models.IntegerField()
+    nama = models.CharField(max_length=255)
+    leader = models.CharField(max_length=255)
+    class Meta:
+        managed = False
+        db_table = 't_opd'
+    
+    def __str__(self):
+        return str(self.nama)
+
 
 # class ModelTAnak(models.Model):
 #     id = models.BigAutoField(primary_key=True)

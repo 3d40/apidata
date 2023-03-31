@@ -15,5 +15,6 @@ urlpatterns = [
 
     #Layanan
     path('kariskarsu', LayananKarisKarsu, name='karisu'),
+    path('opd', LoadOpd, name='opd'),
 ]
 

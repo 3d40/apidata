@@ -19,13 +19,13 @@ class DataPangkatForm(forms.Form):
 
 
 class FormKarisKarsu(forms.Form):
-    surat_pengantar = forms.FileField()
-    skpns = forms.BooleanField(label = 'Berkas PNS')
-    skcpns = forms.BooleanField(label= 'Berkas CPNS')
-    skakhir = forms.BooleanField(label= 'Berkas Pangkat Terakhir')
+    surat_pengantar = forms.FileField(disabled=True)
+    skpns = forms.BooleanField(label = 'Berkas PNS', disabled=True)
+    skcpns = forms.BooleanField(label= 'Berkas CPNS', disabled=True)
+    skakhir = forms.BooleanField(label= 'Berkas Pangkat Terakhir', disabled=True)
 
 class FormIstri(forms.Form):
-    status = forms.BooleanField(label = 'Akta Nikah')
+    status = forms.BooleanField(label = 'Akta Nikah', disabled=True)
 
 
 

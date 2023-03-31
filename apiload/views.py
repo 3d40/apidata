@@ -20,6 +20,7 @@ pangkat = "http://data.bkd.jambiprov.go.id/rest-pangkat/"#5X
 anak = "http://data.bkd.jambiprov.go.id/rest-anak/"#6X
 pasangan = "http://data.bkd.jambiprov.go.id/rest-suami-istri/"#7X
 pendidikan = "http://data.bkd.jambiprov.go.id/rest-pendidikan/"#*X
+opd = 'http://data.bkd.jambiprov.go.id/rest-kepala-opd'
 
 
 def CariView(request):
@@ -136,57 +137,97 @@ def LayananKarisKarsu(request):
     datapasangan = urlopen(pasangan + str(nip))
     json_pasangan = json.load(datapasangan)
     for x in json_pegawai :
-        ModelTRiwayatPangkat.objects.update_or_create(
-            nama = x['field_pangkat'],
-            orang = request.user,
-            simbol = x['field_golongan'],# tmt = datetime.strptime(x['field_tmt_golongan'], '%d-%m-%Y').date(),
-            tmt=x['field_tmt_golongan'], 
-            jenis = x['field_status_sk'], 
-            status = x['moderation_state'] 
-            )
-    for y in json_pasangan :
-        ModelTPasangan.objects.update_or_create(
-            nama = y['title'], 
-            orang = request.user, 
-            akta = y['field_nomor_akta_nikah'], 
-            status_nikah = y['field_status_pernikahan'], 
-            status = y['moderation_state'],
-            tgl_nikah = y['field_tanggal_menikah']
-            )
-    
-    lookpkt = ModelTRiwayatPangkat.objects.filter(orang = request.user)
-    lookpasangan = ModelTPasangan.objects.filter(orang = request.user)
-
-    for pkt in lookpkt:
-        try:
-            idpkcpns = ModelTRiwayatPangkat.objects.get(jenis = "CPNS", orang = request.user)
-        except ObjectDoesNotExist:
-            return HttpResponse("Berkas Tidak Lengkap")
-
-        try:
-            idpkpns = ModelTRiwayatPangkat.objects.get(jenis = "PNS", simbol = x['field_golongan'], orang = request.user)
-        except ObjectDoesNotExist:
-            return HttpResponse("Berkas Tidak Lengkap")
-        
-        try:
-            idpkakhir = lookpkt.last()
-        except ObjectDoesNotExist:
-            return HttpResponse("Berkas Tidak Lengkap")
-        if idpkpns.status == "Valid" and idpkcpns.status == "Valid" and idpkakhir.status == "Valid":
-            formpegawai = FormKarisKarsu(initial={'skpns':True, 'skcpns':True, 'skakhir':True})
+        lookpkt = ModelTRiwayatPangkat.objects.filter(orang = request.user)
+        if lookpkt.exists():
+            #SKCPNS
+            try:
+                idpkcpns = ModelTRiwayatPangkat.objects.get(jenis = "CPNS", orang = request.user)
+            except ObjectDoesNotExist:
+                context= {
+                    'formpegawai':formpegawai,
+                    'formpasangan':formpasangan, 
+                    }
+                return render(request,'apiload/kariskarsu.html', context)
+            
+            #SKPNS
+            try:
+                idpkpns = ModelTRiwayatPangkat.objects.get(jenis = "PNS", simbol = x['field_golongan'], orang = request.user)
+            except ObjectDoesNotExist:
+                context= {
+                    'formpegawai':formpegawai,
+                    'formpasangan':formpasangan, 
+                }
+                return render(request,'apiload/kariskarsu.html', context)
+            
+            #SKTERAKHIR
+            try:
+                idpkakhir = lookpkt.last()
+            except ObjectDoesNotExist:
+                context= {
+                    'formpegawai':formpegawai,
+                    'formpasangan':formpasangan, 
+                    }
+                return render(request,'apiload/kariskarsu.html', context)
+            if idpkpns.status == "Valid" and idpkcpns.status == "Valid" and idpkakhir.status == "Valid":
+                formpegawai = FormKarisKarsu(initial={'skpns':True, 'skcpns':True, 'skakhir':True})
+            else:
+                context= {
+                    'formpegawai':formpegawai,
+                    'formpasangan':formpasangan, 
+                }
+                return render(request,'apiload/kariskarsu.html', context)
         else:
-            return HttpResponse("Berkas Tidak Lengkap")
-        
-        for bojo in lookpasangan:
+            ModelTRiwayatPangkat.objects.update_or_create(
+                nama = x['field_pangkat'],
+                orang = request.user,
+                simbol = x['field_golongan'],# tmt = datetime.strptime(x['field_tmt_golongan'], '%d-%m-%Y').date(),
+                tmt=x['field_tmt_golongan'], 
+                jenis = x['field_status_sk'], 
+                status = x['moderation_state'] 
+                )
+            return lookpkt   
+    #Untuk Akta Nikah
+    for bojo in lookpasangan:
+        lookpasangan = ModelTPasangan.objects.filter(orang = request.user)
+        if lookpasangan.exists():
             getpasangan = lookpasangan.get( orang = request.user)
             if getpasangan.status == "Valid" :
                 formpasangan = FormIstri(initial={'status':True})
+                context= {
+                    'formpegawai':formpegawai,
+                    'formpasangan':formpasangan, 
+                    }
+                return render(request,'apiload/kariskarsu.html', context)
             else: 
-                return HttpResponse("Berkas Tidak Lengkap")
+                 context= {
+                    'formpegawai':formpegawai,
+                    'formpasangan':formpasangan, 
+                    }
+            return render(request,'apiload/kariskarsu.html', context)
+        else:
+            ModelTPasangan.objects.update_or_create(
+                nama = y['title'], 
+                orang = request.user, 
+                akta = y['field_nomor_akta_nikah'], 
+                status_nikah = y['field_status_pernikahan'], 
+                status = y['moderation_state'],
+                tgl_nikah = y['field_tanggal_menikah']
+                )
 
-        context= {
-                'formpegawai':formpegawai,
-                'formpasangan':formpasangan, 
-            }
     return render(request,'apiload/kariskarsu.html', context)
+
+
+def LoadOpd(request):
+    data = urlopen(opd)
+    json_opd = json.load(data)
+    for list_opd in json_opd:
+        print(list_opd['name'])
+        ModelTOpd.objects.update_or_create(
+            ids = list_opd['field_perangkat_daerah_1'], 
+            nama = list_opd['field_perangkat_daerah'], 
+            leader = list_opd['name']
+            )
+    return HttpResponse("SUKSES")
+
+
 
