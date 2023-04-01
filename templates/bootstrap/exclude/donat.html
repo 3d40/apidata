@@ -1,0 +1,43 @@
+{% load static %}
+  <script type="text/javascript">
+  window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer",
+    {
+      title:{
+        text: "Berdasarkan Jenis Jabatan",
+        fontFamily: "Impact",
+        fontWeight: "normal"
+      },
+
+      legend:{
+        verticalAlign: "bottom",
+        horizontalAlign: "center"
+      },
+      data: [
+      {
+        //startAngle: 45,
+       indexLabelFontSize: 20,
+       indexLabelFontFamily: "Garamond",
+       indexLabelFontColor: "darkgrey",
+       indexLabelLineColor: "darkgrey",
+       indexLabelPlacement: "outside",
+       type: "doughnut",
+       showInLegend: true,
+       dataPoints: [
+       {  y: {{senjfs}}, legendText:"Struktural", indexLabel: "Struktural {{jfs}}" },
+       {  y: {{senjft}}, legendText:"Fungsional Tertentu", indexLabel: "Fungsional Tertentu {{jft}}" },
+       {  y: {{senjfu}}, legendText:"Fungsional Umum", indexLabel: "Fungsional Umum {{jfu}}" },
+       ]
+     }
+     ]
+   });
+
+    chart.render();
+  }
+  </script>
+  <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+</body>
+</html>

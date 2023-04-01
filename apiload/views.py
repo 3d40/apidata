@@ -39,7 +39,8 @@ def CariView(request):
             'jabatan':json_pegawai[0]['field_jabatan'],
             'pangkat':json_pegawai[0]['field_golongan'],
             'opd':json_pegawai[0]['field_perangkat_daerah'],
-            'unitkerja':json_pegawai[0]['field_unit_kerja']
+            'unitkerja':json_pegawai[0]['field_unit_kerja'],
+
         }
         form = DataUtamaForm(initial=context)
     #     return render(request,'apiload/index.html', {'form':form})
@@ -53,10 +54,35 @@ def CariView(request):
 
 def index(request: HttpRequest):
     if request.user.is_authenticated:
-        context = {
-            'user' : request.user,
+        nip = request.user
+        data = urlopen(datapokok + str(nip))
+        json_pegawai= json.load(data)
+        pddkan = urlopen(pendidikan + str(nip))
+        json_pddkan = json.load(pddkan)
+        jumlahpddk = len(json_pddkan)-1
+
+        pdkakhir = list(json_pddkan)
+        tingakatpddkan = pdkakhir[jumlahpddk]
+        w = tingakatpddkan['field_tingkat_pendidikan']
+        print(w)
+        contex = {
+            'user':request.user,
+            'nama': json_pegawai[0]['field_nama'],
+            'nip': nip,
+            'jabatan': json_pegawai[0]['field_jabatan'],
+            'pangkat': json_pegawai[0]['field_golongan'],
+            'opd': json_pegawai[0]['field_perangkat_daerah'],
+            'unitkerja': json_pegawai[0]['field_unit_kerja'],
+            'user_picture':json_pegawai[0]['user_picture'],
+            'golongan': json_pegawai[0]['field_golongan'],
+            'telpon': json_pegawai[0]['field_handphone'],
+            'alamat': json_pegawai[0]['field_alamat'],
+            'jenisjabatan': json_pegawai[0]['field_jenis_jabatan'],
+            'tgllahir': json_pegawai[0]['field_tanggal_lahir'],
+            'tempatlahir': json_pegawai[0]['field_tempat_lahir'],
+            'tingkat_pendidikan': w
         }
-        return render(request, 'apiload/index.html', context)
+        return render(request, 'apiload/profile.html', contex)
     else:
         return redirect('cas_ng_login')
 
@@ -131,90 +157,56 @@ def RiwayatDisiplinView(request):
 def LayananKarisKarsu(request):
     formpegawai = FormKarisKarsu
     formpasangan = FormIstri
+    context = {
+        'formpegawai': formpegawai,
+        'formpasangan': formpasangan
+    }
     nip = request.user
     data = urlopen(pangkat + str(nip))
     json_pegawai = json.load(data)
     datapasangan = urlopen(pasangan + str(nip))
     json_pasangan = json.load(datapasangan)
     for x in json_pegawai :
-        lookpkt = ModelTRiwayatPangkat.objects.filter(orang = request.user)
-        if lookpkt.exists():
-            #SKCPNS
-            try:
-                idpkcpns = ModelTRiwayatPangkat.objects.get(jenis = "CPNS", orang = request.user)
-            except ObjectDoesNotExist:
-                context= {
-                    'formpegawai':formpegawai,
-                    'formpasangan':formpasangan, 
-                    }
-                return render(request,'apiload/kariskarsu.html', context)
-            
-            #SKPNS
-            try:
-                idpkpns = ModelTRiwayatPangkat.objects.get(jenis = "PNS", simbol = x['field_golongan'], orang = request.user)
-            except ObjectDoesNotExist:
-                context= {
-                    'formpegawai':formpegawai,
-                    'formpasangan':formpasangan, 
-                }
-                return render(request,'apiload/kariskarsu.html', context)
-            
-            #SKTERAKHIR
-            try:
-                idpkakhir = lookpkt.last()
-            except ObjectDoesNotExist:
-                context= {
-                    'formpegawai':formpegawai,
-                    'formpasangan':formpasangan, 
-                    }
-                return render(request,'apiload/kariskarsu.html', context)
-            if idpkpns.status == "Valid" and idpkcpns.status == "Valid" and idpkakhir.status == "Valid":
-                formpegawai = FormKarisKarsu(initial={'skpns':True, 'skcpns':True, 'skakhir':True})
-            else:
-                context= {
-                    'formpegawai':formpegawai,
-                    'formpasangan':formpasangan, 
-                }
-                return render(request,'apiload/kariskarsu.html', context)
-        else:
-            ModelTRiwayatPangkat.objects.update_or_create(
-                nama = x['field_pangkat'],
-                orang = request.user,
-                simbol = x['field_golongan'],# tmt = datetime.strptime(x['field_tmt_golongan'], '%d-%m-%Y').date(),
-                tmt=x['field_tmt_golongan'], 
-                jenis = x['field_status_sk'], 
-                status = x['moderation_state'] 
-                )
-            return lookpkt   
-    #Untuk Akta Nikah
-    for bojo in lookpasangan:
-        lookpasangan = ModelTPasangan.objects.filter(orang = request.user)
-        if lookpasangan.exists():
-            getpasangan = lookpasangan.get( orang = request.user)
-            if getpasangan.status == "Valid" :
+        ModelTRiwayatPangkat.objects.update_or_create(
+                nama=x['field_pangkat'],
+                orang=request.user,
+                simbol=x['field_golongan'],
+                tmt=x['field_tmt_golongan'],
+                jenis=x['field_status_sk'],
+                status=x['moderation_state']
+            )
+    for y in json_pasangan:
+        ModelTPasangan.objects.update_or_create(
+            nama=y['title'],
+            orang=request.user,
+            akta=y['field_nomor_akta_nikah'],
+            status_nikah=y['field_status_pernikahan'],
+            status=y['moderation_state'],
+            tgl_nikah=y['field_tanggal_menikah']
+            )
+    lookpkt = ModelTRiwayatPangkat.objects.filter(orang = request.user)
+    if lookpkt.exists():
+        try:
+            idpkcpns = ModelTRiwayatPangkat.objects.get(jenis = "CPNS", orang = request.user)
+            idpkpns = ModelTRiwayatPangkat.objects.get(jenis="PNS", simbol=idpkcpns.simbol, orang=request.user)
+            idpkakhir = lookpkt.last()
+            lookpasangan = ModelTPasangan.objects.get(orang=request.user)
+            if idpkpns.status == "Valid" and idpkcpns.status == "Valid" and idpkakhir.status == "Valid" and lookpasangan.status =="Valid":
+                formpegawai = FormKarisKarsu(initial={'skpns': True, 'skcpns': True, 'skakhir': True})
                 formpasangan = FormIstri(initial={'status':True})
-                context= {
+                context = {
                     'formpegawai':formpegawai,
-                    'formpasangan':formpasangan, 
-                    }
-                return render(request,'apiload/kariskarsu.html', context)
-            else: 
-                 context= {
-                    'formpegawai':formpegawai,
-                    'formpasangan':formpasangan, 
-                    }
-            return render(request,'apiload/kariskarsu.html', context)
-        else:
-            ModelTPasangan.objects.update_or_create(
-                nama = y['title'], 
-                orang = request.user, 
-                akta = y['field_nomor_akta_nikah'], 
-                status_nikah = y['field_status_pernikahan'], 
-                status = y['moderation_state'],
-                tgl_nikah = y['field_tanggal_menikah']
-                )
-
-    return render(request,'apiload/kariskarsu.html', context)
+                    'formpasangan':formpasangan
+                }
+            else:
+                context = {
+                    'formpegawai': formpegawai,
+                    'formpasangan': formpasangan
+                }
+                return render(request, 'apiload/kariskarsu.html', context)
+        except:
+            pass
+    return render(request, 'apiload/kariskarsu.html', context)
 
 
 def LoadOpd(request):
