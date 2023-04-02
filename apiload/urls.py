@@ -15,6 +15,8 @@ urlpatterns = [
 
     #Layanan
     path('kariskarsu', LayananKarisKarsu, name='karisu'),
+    path('kariskarsu/formusalan', CetakFormView, name='formdownload'),
+
     path('opd', LoadOpd, name='opd'),
 ]
 

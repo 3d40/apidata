@@ -1,0 +1,43 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    @page {
+        size: 21cm 33cm;
+        margin-bottom: 1,29cm;
+        margin-top: 1,01cm;
+        margin-right: 1,19cm;
+        margin-left: 1,85cm;
+        margin: 1cm;
+        spacing: 2cm;
+    }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Form Usulan Karis Karsu</title>
+</head>
+<body>
+{{nama}}
+{{nip}}
+{{jabatan}}
+{{pangkat}}
+{{opd}}
+{{unitkerja}}
+{{golongan}}
+{{telpon}}
+{{alamat}}
+{{jenisjabatan}}
+{{tgllahir}}
+{{tempatlahir}}
+{{ístri}}
+{% for data in anak %}
+<th scope="row" >{{forloop.counter}}</th>
+<td>{{data.title}}-{{data.field_anak_ke}}-{{data.field_status_anak}}</td>
+{% endfor %}
+
+</body>
+
+</html>

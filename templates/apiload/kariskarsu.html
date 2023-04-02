@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>LAYANAN KARIS KARSU</title>
-</head>
-<body>
+{% extends 'bootstrap/base.html' %}
+{% block content %}
 
 <h1>Kelengkapan Bahan</h1>
 <form action="">
 {{formpegawai.as_p}}
 {{formpasangan.as_p}}
-<input type="submit" value="Submit">
+     <a href="{% url 'apiload:formdownload' %}">Download Formulir</a>
+<input type="submit" value="Ajukan Permohonan">
 </form>
-</body>
-</html>
+{% endblock %}

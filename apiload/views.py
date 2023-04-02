@@ -8,9 +8,11 @@ from . signals import *
 from .models import *
 from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
-
-
+from dateutil.relativedelta import relativedelta
 from django.http import HttpRequest, HttpResponse
+from xhtml2pdf import pisa
+from django.template.loader import get_template
+
 
 datapokok = "http://data.bkd.jambiprov.go.id/rest-data-pokok/"#1X
 displin = "http://data.bkd.jambiprov.go.id/rest-disiplin/"#2X
@@ -50,8 +52,6 @@ def CariView(request):
 
 
 
-
-
 def index(request: HttpRequest):
     if request.user.is_authenticated:
         nip = request.user
@@ -65,6 +65,7 @@ def index(request: HttpRequest):
         tingakatpddkan = pdkakhir[jumlahpddk]
         w = tingakatpddkan['field_tingkat_pendidikan']
         print(w)
+        pktakhir = ModelTRiwayatPangkat.objects.filter(orang= nip).latest('tmt')
         contex = {
             'user':request.user,
             'nama': json_pegawai[0]['field_nama'],
@@ -80,7 +81,9 @@ def index(request: HttpRequest):
             'jenisjabatan': json_pegawai[0]['field_jenis_jabatan'],
             'tgllahir': json_pegawai[0]['field_tanggal_lahir'],
             'tempatlahir': json_pegawai[0]['field_tempat_lahir'],
-            'tingkat_pendidikan': w
+            'tingkat_pendidikan': w,
+            'mktahun' : pktakhir.mktahun,
+            'mkbulan': pktakhir.mkbulan,
         }
         return render(request, 'apiload/profile.html', contex)
     else:
@@ -185,11 +188,20 @@ def LayananKarisKarsu(request):
             tgl_nikah=y['field_tanggal_menikah']
             )
     lookpkt = ModelTRiwayatPangkat.objects.filter(orang = request.user)
+    idpkakhir = lookpkt.latest('tmt')
+    idpktawal = lookpkt.first()
+    masakerja = relativedelta(datetime.strptime(idpkakhir.tmt,'%m-%d-%Y'), datetime.strptime(idpktawal.tmt,'%m-%d-%Y'))
+    idpkakhir.mktahun = masakerja.years
+    idpkakhir.mkbulan = masakerja.months
+    idpkakhir.save()
+    print(idpktawal.tmt, idpkakhir.tmt, masakerja.years, masakerja.months)
     if lookpkt.exists():
         try:
             idpkcpns = ModelTRiwayatPangkat.objects.get(jenis = "CPNS", orang = request.user)
             idpkpns = ModelTRiwayatPangkat.objects.get(jenis="PNS", simbol=idpkcpns.simbol, orang=request.user)
-            idpkakhir = lookpkt.last()
+            # idpkakhir = lookpkt.last()
+            # idpktawal = lookpkt.first()
+            # print(idpktawal, idpkakhir)
             lookpasangan = ModelTPasangan.objects.get(orang=request.user)
             if idpkpns.status == "Valid" and idpkcpns.status == "Valid" and idpkakhir.status == "Valid" and lookpasangan.status =="Valid":
                 formpegawai = FormKarisKarsu(initial={'skpns': True, 'skcpns': True, 'skakhir': True})
@@ -220,6 +232,44 @@ def LoadOpd(request):
             leader = list_opd['name']
             )
     return HttpResponse("SUKSES")
+
+
+def CetakFormView(request):
+    nip = request.user
+    datautama = urlopen(datapokok + str(nip))
+    json_pegawai = json.load(datautama)
+    pasangans = urlopen(pasangan + str(nip))
+    json_pasangan = json.load(pasangans)
+    anaks = urlopen(anak + str(nip))
+    json_anak = json.load(anaks)
+
+    template_path = 'apiload/kariskarsuform.html'
+    context = {
+        'anak':json_anak,
+        'ístri': json_pasangan[0]['title'],
+        'user': request.user,
+        'nama': json_pegawai[0]['field_nama'],
+        'nip': nip,
+        'jabatan': json_pegawai[0]['field_jabatan'],
+        'pangkat': json_pegawai[0]['field_golongan'],
+        'opd': json_pegawai[0]['field_perangkat_daerah'],
+        'unitkerja': json_pegawai[0]['field_unit_kerja'],
+        'user_picture': json_pegawai[0]['user_picture'],
+        'golongan': json_pegawai[0]['field_golongan'],
+        'telpon': json_pegawai[0]['field_handphone'],
+        'alamat': json_pegawai[0]['field_alamat'],
+        'jenisjabatan': json_pegawai[0]['field_jenis_jabatan'],
+        'tgllahir': json_pegawai[0]['field_tanggal_lahir'],
+        'tempatlahir': json_pegawai[0]['field_tempat_lahir'],
+        }
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="FormUsulanKarisKarsu.pdf"'
+    template = get_template(template_path)
+    html = template.render(context)
+    pisa_status = pisa.CreatePDF(html, dest=response)
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
 
 
 
