@@ -1,4 +1,5 @@
 from django import forms
+from .models import *
 
 class DataUtamaForm(forms.Form):
     nama = forms.CharField(label='Nama', max_length=100)
@@ -27,5 +28,7 @@ class FormKarisKarsu(forms.Form):
 class FormIstri(forms.Form):
     status = forms.BooleanField(label = 'Akta Nikah', disabled=True)
 
-
-
+class FormPengKarsu(forms.ModelForm):
+    class Meta:
+        model = ModelTLayananKarisKarsu
+        fields =  ['orang', 'opd', 'jenis']

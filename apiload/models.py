@@ -1,6 +1,10 @@
 import datetime
 
 from django.db import models
+import qrcode
+from io import BytesIO
+from django.core.files import File
+from PIL import Image, ImageDraw
 
 # Create your models here.
 class ModelTRiwayatPangkat(models.Model):
@@ -67,12 +71,24 @@ class ModelTLayananKarisKarsu(models.Model):
     tolak = models.DateField()
     selesai = models.DateField()
     siapa = models.CharField(max_length=100)
+    code = models.ImageField(blank=True, null=True, upload_to='code')
 
     class Meta:
         managed = False
         db_table = 't_layanan_karis_karsu'
     def __str__(self):
         return str(self.orang)
+    
+    def save(self, *arg, **kwargs):
+        qr_image = qrcode.make(self.orang)
+        qr_offset = Image.new('RGB', (310,310), white)
+        qr_offset.paste(qr_image)
+        files_name= f'{self.orang}-{self.id}.qr.png'
+        stream = BytesIO()
+        qr_offset.save(stream, 'PNG')
+        self.code.save(files_name,File(stream), save=False)
+        qr_offset.close()
+        super().save(*arg, **kwargs)
 
 class TJenisPengajuan(models.Model):
     nama = models.CharField(max_length=100)

@@ -8,7 +8,7 @@ from . signals import *
 from .models import *
 from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
-from dateutil.relativedelta import relativedelta
+from dateutil.relativedelta import  relativedelta
 from django.http import HttpRequest, HttpResponse
 from xhtml2pdf import pisa
 from django.template.loader import get_template
@@ -93,18 +93,18 @@ def ping(request: HttpRequest) -> HttpResponse:
     return HttpResponse('pong', content_type="text/plain")
 
 def RiwayatPangkatView(request):
-    nip = request.session['nip']
+    nip = request.user
     data = urlopen(pangkat + str(nip))
-    json_pegawai = json.load(data)
+    json_pegawai = json.load(data)  
     context = {
         'data':json_pegawai
         }
     print(context)
-    return render(request,'apiload/riwayatpangkat.html', context)
+    return render(request,'apiload/rwgolongan_list.html', context)
 
 
 def RiwayatJabatanView(request):
-    nip = request.session['nip']
+    nip = request.user
     data = urlopen(jabatan + str(nip))
     json_pegawai = json.load(data)
     context = {
@@ -114,7 +114,7 @@ def RiwayatJabatanView(request):
     return render(request,'apiload/riwayatjabatan.html', context)
 
 def RiwayatPendidikanView(request):
-    nip = request.session['nip']
+    nip = request.user
     data = urlopen(pendidikan + str(nip))
     json_pegawai = json.load(data)
     context = {
@@ -124,7 +124,7 @@ def RiwayatPendidikanView(request):
     return render(request,'apiload/riwayatpendidikan.html', context)
 
 def RiwayatDiklatView(request):
-    nip = request.session['nip']
+    nip = request.user
     data = urlopen(diklat + str(nip))
     json_pegawai = json.load(data)
     context = {
@@ -147,7 +147,7 @@ def PasanganView(request):
     return render(request,'apiload/keluarga.html', context)
 
 def RiwayatDisiplinView(request):
-    nip = request.session['nip']
+    nip = request.user
     data = urlopen(displin + str(nip))
     json_pegawai = json.load(data)
     context = {
@@ -219,6 +219,13 @@ def LayananKarisKarsu(request):
         except:
             pass
     return render(request, 'apiload/kariskarsu.html', context)
+
+def PengajuanKarisKarsu(request):
+    form = FormKarisKarsu
+    context= {
+        'form':form
+    }
+    return render(request, 'apiload/pengajuankariskarsu.html')
 
 
 def LoadOpd(request):

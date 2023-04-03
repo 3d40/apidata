@@ -1,0 +1,91 @@
+{% extends 'bootstrap/base.html' %}
+{% load static %}
+{% block content %}
+<section style="background-color: #eee;">
+  <div class="container py-5">
+    <div class="row">
+        <div class="col">
+          <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+            <ol class="breadcrumb mb-0">
+              {% include 'bootstrap/exclude/navlink.html' %}
+          </nav>
+        </div>
+      </div>
+        <div class="content-wrapper">
+          <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">{{pegawai.nama}}</h4>
+              <p class="card-description">
+                {{pegawai.nip_baru}} <code>{{judul}}</code>
+              </p>
+              <div class="table-responsive pt-3">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>
+                        Nomor
+                      </th>
+                      <th>
+                        Nama Hukuman Disiplin
+                      </th>
+                      <th>
+                        Nomor SK
+                      </th>
+                      <th>
+                        Tanggal SK
+                      </th>
+                      <th>
+                        Terhitung Mulai Tanggal
+                      </th>
+                      <th>
+                        Berakhir Pada Tanggal
+                      </th>
+                      <th>
+                        Status Berkas
+                      </th>
+                      <th>
+                        Arsip
+                      </th>
+                    </tr>
+                  </thead>
+                  {% for data in object_list %}
+                  <tbody>
+                    <tr>
+                      <td>
+                        {{forloop.counter}}
+                      </td>
+                      <td>
+                       <a href="{% url 'pegawai:editpangkat' data.id %}">{{data.jenis_kp}}</a> 
+                      </td>
+                      <td>
+                        {{data.id_golongan}}
+                      </td>
+                      <td>
+                        {{data.sk_nomor}}
+                      </td>
+                      <td>
+                        {{data.sk_tanggal}}
+                      </td>
+                      <td>
+                        {{data.tmt_golongan}}
+                      </td>
+                      <td>
+                        {{data.status}}
+                      </td>
+                      <td>
+                        {% if data.dokumen %}
+                        <a href="{{data.dokumen.url}}">Lihat Arsip</a>
+                        {% else %}
+                        data belum data
+                        {% endif %}
+                      </td>
+                    </tr>
+                  </tbody>
+                  {% endfor %}
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
