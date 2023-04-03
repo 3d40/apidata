@@ -53,6 +53,19 @@ def CariView(request):
 
 
 def index(request: HttpRequest):
+    lookpkt = ModelTRiwayatPangkat.objects.filter(orang=request.user).order_by('tmt')
+    jlhpkt =len(lookpkt)-1
+    getpkt = list(lookpkt)
+    idpkakhir = getpkt[jlhpkt]
+
+    print(idpkakhir)
+    for pkt in lookpkt:
+        idpktawal = lookpkt.first()
+        idpkakhir = lookpkt.latest('tmt')
+        masakerja = relativedelta(datetime.strptime(idpkakhir.tmt,'%m-%d-%Y'), datetime.strptime(idpktawal.tmt,'%m-%d-%Y'))
+        idpkakhir.mktahun = masakerja.years
+        idpkakhir.mkbulan = masakerja.months
+        idpkakhir.save()
     if request.user.is_authenticated:
         nip = request.user
         data = urlopen(datapokok + str(nip))
@@ -60,7 +73,6 @@ def index(request: HttpRequest):
         pddkan = urlopen(pendidikan + str(nip))
         json_pddkan = json.load(pddkan)
         jumlahpddk = len(json_pddkan)-1
-
         pdkakhir = list(json_pddkan)
         tingakatpddkan = pdkakhir[jumlahpddk]
         w = tingakatpddkan['field_tingkat_pendidikan']
@@ -186,38 +198,8 @@ def LayananKarisKarsu(request):
             status_nikah=y['field_status_pernikahan'],
             status=y['moderation_state'],
             tgl_nikah=y['field_tanggal_menikah']
-            )
-    lookpkt = ModelTRiwayatPangkat.objects.filter(orang = request.user)
-    idpkakhir = lookpkt.latest('tmt')
-    idpktawal = lookpkt.first()
-    masakerja = relativedelta(datetime.strptime(idpkakhir.tmt,'%m-%d-%Y'), datetime.strptime(idpktawal.tmt,'%m-%d-%Y'))
-    idpkakhir.mktahun = masakerja.years
-    idpkakhir.mkbulan = masakerja.months
-    idpkakhir.save()
-    print(idpktawal.tmt, idpkakhir.tmt, masakerja.years, masakerja.months)
-    if lookpkt.exists():
-        try:
-            idpkcpns = ModelTRiwayatPangkat.objects.get(jenis = "CPNS", orang = request.user)
-            idpkpns = ModelTRiwayatPangkat.objects.get(jenis="PNS", simbol=idpkcpns.simbol, orang=request.user)
-            # idpkakhir = lookpkt.last()
-            # idpktawal = lookpkt.first()
-            # print(idpktawal, idpkakhir)
-            lookpasangan = ModelTPasangan.objects.get(orang=request.user)
-            if idpkpns.status == "Valid" and idpkcpns.status == "Valid" and idpkakhir.status == "Valid" and lookpasangan.status =="Valid":
-                formpegawai = FormKarisKarsu(initial={'skpns': True, 'skcpns': True, 'skakhir': True})
-                formpasangan = FormIstri(initial={'status':True})
-                context = {
-                    'formpegawai':formpegawai,
-                    'formpasangan':formpasangan
-                }
-            else:
-                context = {
-                    'formpegawai': formpegawai,
-                    'formpasangan': formpasangan
-                }
-                return render(request, 'apiload/kariskarsu.html', context)
-        except:
-            pass
+        )
+
     return render(request, 'apiload/kariskarsu.html', context)
 
 def PengajuanKarisKarsu(request):
@@ -225,7 +207,7 @@ def PengajuanKarisKarsu(request):
     context= {
         'form':form
     }
-    return render(request, 'apiload/pengajuankariskarsu.html')
+    return render(request, 'apiload/pengajuankariskarsu.html', context)
 
 
 def LoadOpd(request):
@@ -278,5 +260,46 @@ def CetakFormView(request):
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
+
+def CekBerkasKarsuView(request):
+    nip = request.user
+    data = urlopen(pangkat + str(nip))
+    json_pegawai = json.load(data)
+    jmlhpkt = len(json_pegawai)-1
+
+    bojo = urlopen(pasangan + str(nip))
+    json_bojo = json.load(bojo)
+
+    bojos = json_bojo[0]['moderation_state']
+    cpns = json_pegawai[0]['moderation_state']
+    pns = json_pegawai[1]['moderation_state']
+    akhir = json_pegawai[jmlhpkt]['moderation_state']
+    if cpns == "Valid" and pns == "Valid" and akhir == "Valid" and bojos == "Valid":
+        formpegawai = FormKarisKarsu(initial ={'skcpns':True, 'skpns':True, 'skakhir':True})
+        formpasangan = FormIstri(initial ={'status':True})
+        context = {
+            'formpegawai': formpegawai,
+            'formpasangan': formpasangan
+        }
+    else:
+        return HttpResponse("Maaf Data Anda Belum Lengkap")
+    return render(request, 'apiload/kariskarsufix.html', context)
+
+
+def PengajuanKarisu(request):
+    nip = request.user
+    data = urlopen(datapokok + str(nip))
+    json_pegawai = json.load(data)
+    form = FormPengKarsu(initial ={
+        'orang':json_pegawai[0]['field_nama'],
+        'opd': json_pegawai[0]['field_perangkat_daerah'],
+    })
+    if request.method =='POST':
+        form = form(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponse("SUKSES")
+    else:
+        return render(request, 'apiload/formpengkarsu.html',{'form':form} )
 
 

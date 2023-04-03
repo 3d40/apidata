@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'apiload',
     'django_cas_ng',
     'uniauth',
-    'qr_code',
+    'qrcode',
 
 ]
 

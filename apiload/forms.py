@@ -20,7 +20,6 @@ class DataPangkatForm(forms.Form):
 
 
 class FormKarisKarsu(forms.Form):
-    surat_pengantar = forms.FileField(disabled=True)
     skpns = forms.BooleanField(label = 'Berkas PNS', disabled=True)
     skcpns = forms.BooleanField(label= 'Berkas CPNS', disabled=True)
     skakhir = forms.BooleanField(label= 'Berkas Pangkat Terakhir', disabled=True)
@@ -31,4 +30,4 @@ class FormIstri(forms.Form):
 class FormPengKarsu(forms.ModelForm):
     class Meta:
         model = ModelTLayananKarisKarsu
-        fields =  ['orang', 'opd', 'jenis']
+        fields =  ['jenis','orang', 'opd', 'pendukung', 'formulir']

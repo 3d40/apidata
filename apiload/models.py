@@ -64,6 +64,8 @@ class ModelTOpd(models.Model):
 class ModelTLayananKarisKarsu(models.Model):
     orang = models.CharField(max_length=100)
     opd = models.CharField(max_length=255)
+    pendukung= models.ImageField(upload_to = "media")
+    formulir = models.ImageField(upload_to = "media")
     jenis = models.ForeignKey('TJenisPengajuan',  on_delete=models.DO_NOTHING, blank=True, null=True)
     veropd = models.DateField()
     verbkd = models.DateField()
