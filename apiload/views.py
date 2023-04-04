@@ -52,20 +52,16 @@ def CariView(request):
 
 
 
-def index(request: HttpRequest):
-    lookpkt = ModelTRiwayatPangkat.objects.filter(orang=request.user).order_by('tmt')
-    jlhpkt =len(lookpkt)-1
-    getpkt = list(lookpkt)
-    idpkakhir = getpkt[jlhpkt]
+def index(request):
+    # nip = request.user
+    # lookpkt = ModelTRiwayatPangkat.objects.filter(orang=nip)
+    # idpktawal = lookpkt.get(orang = nip, jenis ="CPNS")
+    # idpkakhir = ModelTRiwayatPangkat.objects.filter(orang=request.user).latest()
+    # masakerja = relativedelta(datetime.strptime(idpkakhir.tmt,'%m-%d-%Y'), datetime.strptime(idpktawal.tmt,'%m-%d-%Y'))
+    # idpkakhir.mktahun = masakerja.years
+    # idpkakhir.mkbulan = masakerja.months
+    # idpkakhir.save()
 
-    print(idpkakhir)
-    for pkt in lookpkt:
-        idpktawal = lookpkt.first()
-        idpkakhir = lookpkt.latest('tmt')
-        masakerja = relativedelta(datetime.strptime(idpkakhir.tmt,'%m-%d-%Y'), datetime.strptime(idpktawal.tmt,'%m-%d-%Y'))
-        idpkakhir.mktahun = masakerja.years
-        idpkakhir.mkbulan = masakerja.months
-        idpkakhir.save()
     if request.user.is_authenticated:
         nip = request.user
         data = urlopen(datapokok + str(nip))
