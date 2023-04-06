@@ -23,6 +23,18 @@ anak = "http://data.bkd.jambiprov.go.id/rest-anak/"#6X
 pasangan = "http://data.bkd.jambiprov.go.id/rest-suami-istri/"#7X
 pendidikan = "http://data.bkd.jambiprov.go.id/rest-pendidikan/"#*X
 opd = 'http://data.bkd.jambiprov.go.id/rest-kepala-opd'
+userlayanan = '/home/bonces/baru/apidata/apiload/rest-user-all.json'
+
+
+def userall(request):
+    data = open(userlayanan)
+    pengguna = json.load(data)
+    for gust in pengguna:
+        ModelTUser.objects.update_or_create(
+            orang = gust['name'],
+            role = gust['roles_target_id']
+        )
+    return HttpResponse("SUKSES")
 
 
 def CariView(request):
@@ -50,17 +62,46 @@ def CariView(request):
         return render(request,'apiload/datautama.html', {'form':form})
     return render(request, 'apiload/cari.html', {'form':form})
 
+def addpkt (request):
+    nip = request.user
+    data = urlopen(pangkat + str(nip))
+    json_pegawai = json.load(data)
+    datapasangan = urlopen(pasangan + str(nip))
+    json_pasangan = json.load(datapasangan)
+    for x in json_pegawai :
+        ModelTRiwayatPangkat.objects.update_or_create(
+                nama=x['field_pangkat'],
+                orang=request.user,
+                simbol=x['field_golongan'],
+                tmt=x['field_tmt_golongan'],
+                jenis=x['field_status_sk'],
+                status=x['moderation_state']
+            )
+    for y in json_pasangan:
+        ModelTPasangan.objects.update_or_create(
+            nama=y['title'],
+            orang=request.user,
+            akta=y['field_nomor_akta_nikah'],
+            status_nikah=y['field_status_pernikahan'],
+            status=y['moderation_state'],
+            tgl_nikah=y['field_tanggal_menikah']
+        )
+    if request.user.is_authenticated:
+        return redirect('apiload:index')
+    else:
+        return redirect('cas_ng_login')
 
 
 def index(request):
-    # nip = request.user
-    # lookpkt = ModelTRiwayatPangkat.objects.filter(orang=nip)
-    # idpktawal = lookpkt.get(orang = nip, jenis ="CPNS")
-    # idpkakhir = ModelTRiwayatPangkat.objects.filter(orang=request.user).latest()
-    # masakerja = relativedelta(datetime.strptime(idpkakhir.tmt,'%m-%d-%Y'), datetime.strptime(idpktawal.tmt,'%m-%d-%Y'))
-    # idpkakhir.mktahun = masakerja.years
-    # idpkakhir.mkbulan = masakerja.months
-    # idpkakhir.save()
+    nip = request.user
+    lookpkt = ModelTRiwayatPangkat.objects.filter(orang=nip).order_by('tmt')
+    idpktawal = lookpkt.first()
+    print(idpktawal)
+    idpkakhir = lookpkt.last()
+    masakerja = relativedelta(datetime.strptime(idpkakhir.tmt,'%m-%d-%Y'), datetime.strptime(idpktawal.tmt,'%m-%d-%Y'))
+    idpkakhir.mktahun = masakerja.years
+    idpkakhir.mkbulan = masakerja.months
+    idpkakhir.save()
 
     if request.user.is_authenticated:
         nip = request.user
@@ -73,8 +114,7 @@ def index(request):
         tingakatpddkan = pdkakhir[jumlahpddk]
         w = tingakatpddkan['field_tingkat_pendidikan']
         print(w)
-        pktakhir = ModelTRiwayatPangkat.objects.filter(orang= nip).latest('tmt')
-        contex = {
+        context={
             'user':request.user,
             'nama': json_pegawai[0]['field_nama'],
             'nip': nip,
@@ -90,10 +130,10 @@ def index(request):
             'tgllahir': json_pegawai[0]['field_tanggal_lahir'],
             'tempatlahir': json_pegawai[0]['field_tempat_lahir'],
             'tingkat_pendidikan': w,
-            'mktahun' : pktakhir.mktahun,
-            'mkbulan': pktakhir.mkbulan,
+            'mktahun' : idpkakhir.mktahun,
+            'mkbulan': idpkakhir.mkbulan,
         }
-        return render(request, 'apiload/profile.html', contex)
+        return render(request, 'apiload/profile.html', context)
     else:
         return redirect('cas_ng_login')
 
@@ -278,24 +318,54 @@ def CekBerkasKarsuView(request):
             'formpasangan': formpasangan
         }
     else:
-        return HttpResponse("Maaf Data Anda Belum Lengkap")
+        context = {
+            'formpegawai': formpegawai,
+            'formpasangan': formpasangan
+        }
+        return render(request, 'apiload/kariskarsufix.html', context)
     return render(request, 'apiload/kariskarsufix.html', context)
 
+
+# def PengajuanKarisu(request):
+#     nip = request.user
+#     data = urlopen(datapokok + str(nip))
+#     json_pegawai = json.load(data)
+#     form = FormPengKarsu(initial ={
+#         'orang':json_pegawai[0]['field_nama'],
+#         'opd': json_pegawai[0]['field_perangkat_daerah'],
+#     })
+#     if request.method =='POST':
+#         form = form(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponse("SUKSES")
+#     else:
+#         return render(request, 'apiload/formpengkarsu.html',{'form':form} )
 
 def PengajuanKarisu(request):
     nip = request.user
     data = urlopen(datapokok + str(nip))
     json_pegawai = json.load(data)
-    form = FormPengKarsu(initial ={
-        'orang':json_pegawai[0]['field_nama'],
-        'opd': json_pegawai[0]['field_perangkat_daerah'],
-    })
-    if request.method =='POST':
-        form = form(request.POST, request.FILES)
+    form = FormPengKarsu()
+    print(form)
+    if request.method=='POST':
+        form = FormPengKarsu(request.POST, instance={
+            'orang':json_pegawai[0]['field_nama'],
+            'opd': json_pegawai[0]['field_perangkat_daerah'],
+            })
         if form.is_valid():
             form.save()
-            return HttpResponse("SUKSES")
-    else:
-        return render(request, 'apiload/formpengkarsu.html',{'form':form} )
+            return render(request, 'apiload/kariskarsufix.html', {'form':form})
+    return redirect('apiload:index')
+
+
+def IsiDataUatam(requset):
+    pengguna = ModelTUser.objects.all()
+    for data in pengguna:
+        pokok = urlopen(datapokok + str(data.orang))
+        json_pegawai = json.load(pokok)
+        print(json_pegawai)
+    return HttpResponse("Banyak Nian")
+
 
 

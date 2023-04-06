@@ -4,7 +4,8 @@ from .views import *
 
 app_name = 'apiload'
 urlpatterns = [
-    path('', index, name='index'),
+    path('', addpkt, name='addpkt'),
+    path('index', index, name='index'),
     path('pangkat', RiwayatPangkatView, name='rwpangkat'),
     path('jabatan', RiwayatJabatanView, name='rwjabatan'),
     path('pendidikan', RiwayatPendidikanView, name='rwpendidikan'),
@@ -21,5 +22,8 @@ urlpatterns = [
     path('kariskarsu/cekberkas/ajukan', PengajuanKarisu, name='ajukankarsu'),
 
     path('opd', LoadOpd, name='opd'),
+    path('userall', userall, name='userall'),
+    path('datautama', IsiDataUatam, name='datautama'),
+
 ]
 
