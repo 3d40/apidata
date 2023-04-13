@@ -1,4 +1,3 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -8,8 +7,8 @@
         size: 21cm 33cm;
         margin-bottom: 1,29cm;
         margin-top: 1,01cm;
-        margin-right: 1,19cm;
-        margin-left: 1,85cm;
+        margin-right: 1cm;
+        margin-left: 1cm;
         margin: 1cm;
         spacing: 2cm;
     }
@@ -17,22 +16,646 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Form Usulan Karis Karsu</title>
+    <title>Formulir Karis Karsu | BKD</title>
 </head>
 <body>
-{{nama}}
-{{nip}}
-{{jabatan}}
-{{pangkat}}
-{{opd}}
-{{unitkerja}}
-{{golongan}}
-{{telpon}}
-{{alamat}}
-{{jenisjabatan}}
-{{tgllahir}}
-{{tempatlahir}}
-{{ístri}}
+    <table border=0 cellspacing=0 cellpadding=0>
+        <tr height=10>
+            <td width=40 align=left></td>
+            <td width=356 align=left></td>
+            <td width=150 align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>LAMPIRAN I-A</font></td>
+            <td width=12 align=center bgcolor=#ffffff><strong>:</strong></td>
+            <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>SURAT EDARAN KEPALA BADAN ADMINISTRASI</font></td>
+        </tr>
+        <tr height=10>
+            <td width=40 align=left></td>
+            <td width=100 align=left>&nbsp;</td>
+            <td width=110 align=center bgcolor=#ffffff>&nbsp;</td>
+            <td width=12 align=left bgcolor=#ffffff>&nbsp;</td>
+            <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>KEPEGAWAIAN NEGARA</font></td>
+        </tr>
+        <tr height=10>
+            <td width=40 align=left></td>
+            <td width=100 align=left>&nbsp;</td>
+            <td width=110 align=center bgcolor=#ffffff>&nbsp;</td>
+            <td width=12 align=left bgcolor=#ffffff>&nbsp;</td>
+            <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>NOMOR : 08/SET/1983</font></td>
+        </tr>
+        <tr height=10>
+            <td width=40 align=left></td>
+            <td width=100 align=left>&nbsp;</td>
+            <td width=110 align=center bgcolor=#ffffff>&nbsp;</td>
+            <td width=12 align=left bgcolor=#ffffff>&nbsp;</td>
+            <td align=left bgcolor=#ffffff>
+            <div>
+              <div><u><font style=font-size:10pt face="arial narrow" color=#000000>TANGGAL : 26 APRIL 1983</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></div>
+            </div>
+          </td>
+        </tr>
+        <tr height=15>
+            <td width=62></td>
+            <td width=395></td>
+            <td width=110></td>
+            <td width=12 align=left>
+                <font style=font-size:10pt face="arial narrow" color=#000000></font>
+            </td>
+            <td width=304 align=left bgcolor=#ffffff><b>
+                <font style=font-size:10pt face="arial narrow" color=#000000></font>
+            </b>
+        </td>
+        </tr>
+    </table>
+    <table width="931" border=0 cellpadding=0 cellspacing=0>
+        <tr height=10>
+          <td></td>
+          <td></td>
+          <td align=left bgcolor=#ffffff>Jambi,</td>
+        </tr>
+        <tr height=10>
+          <td></td>
+          <td></td>
+          <td align=left bgcolor=#ffffff>Kepada</td>
+        </tr>
+        <tr height=10>
+          <td></td>
+          <td></td>
+          <td align=left bgcolor=#ffffff>Yth.</td>
+        </tr>
+        <tr height=10>
+          <td width=446></td>
+            <td width=172></td>
+            <td width="313" align=left bgcolor=#ffffff>di-.</td>
+        </tr>
+    </table>
+    <br>
+    <table border=0 cellpadding=0 cellspacing=0>
+      <tr height=10>
+        <td width="213"></td>
+        <td width="27" align=left bgcolor=#ffffff>&nbsp;</td>
+      </tr>
+      <tr height=10>
+        <td colspan="2"><font style=font-size:10pt face="arial narrow" color=#000000>LAPORAN PERKAWIANAN PERTAMA</font></td>
+      </tr>
+    </table>
+	<table width="734" border=0 cellpadding=0 cellspacing=0>
+        <tr height=10>
+          <td  width="30"></td>
+          <td width="20" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>1.</font></td>
+          <td width="635" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>Yang bertanda tangan dibawah ini :</font></td>
+        </tr>
+    </table>
+	<table border=0 cellspacing=0 cellpadding=0>
+        <tr height=10>
+          <td width=25 align=left></td>
+            <td width=20 align=left></td>
+            <td width=151 align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>a.&nbsp;&nbsp;Nama</font></td>
+            <td width=20 align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+            <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>{{nama}}</font></td>
+        </tr>
+        <tr height=10>
+          <td width=25 align=left></td>
+            <td width=20 align=left></td>
+            <td width=151 align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>b.&nbsp;&nbsp;NIP / Nomor Identitas</font></td>
+            <td width=20 align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+            <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>{{nip}}</font></td>
+        </tr>
+        <tr height=10>
+          <td width=25 align=left></td>
+            <td width=20 align=left></td>
+            <td width=151 align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>c.&nbsp;&nbsp;Pangkat / Gol. Ruang</font></td>
+            <td width=20 align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+            <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>{{pangkat}} / {{golongan}}</font></td>
+        </tr>
+        <tr height=10>
+          <td width=25 align=left></td>
+            <td width=20 align=left></td>
+            <td width=151 align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>d.&nbsp;&nbsp;Jataban / Perkerjaan</font></td>
+            <td width=20 align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+            <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>{{jabatan}} </font></td>
+        </tr>
+        <tr height=10>
+          <td align=left></td>
+          <td align=left></td>
+          <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>e.&nbsp;&nbsp;Satua Organisasi</font></td>
+          <td align=center bgcolor=#ffffff>:</td>
+          <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>{{opd}}</font></td>
+        </tr>
+        <tr height=10>
+          <td align=left></td>
+          <td align=left></td>
+          <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>f.&nbsp;&nbsp;&nbsp;Instansi</font></td>
+          <td align=center bgcolor=#ffffff>:</td>
+          <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>{{unitkerja}}</font></td>
+        </tr>
+        <tr height=10>
+          <td align=left></td>
+          <td align=left></td>
+          <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>g.&nbsp;&nbsp;Tempat dan Tanggal Lahir</font></td>
+          <td align=center bgcolor=#ffffff>:</td>
+          <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>&nbsp;{{tempatlahir}} dan {{tgllahir}}</font></td>
+        </tr>
+        <tr height=10>
+          <td align=left></td>
+          <td align=left></td>
+          <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>h.&nbsp;&nbsp;Jenis Kelamin</font></td>
+          <td align=center bgcolor=#ffffff>:</td>
+          <td align=left bgcolor=#ffffff>&nbsp;{{jeniskelamin}}</td>
+        </tr>
+        <tr height=10>
+          <td align=left></td>
+          <td align=left></td>
+          <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>i.&nbsp;&nbsp;&nbsp;Agama</font></td>
+          <td align=center bgcolor=#ffffff>:</td>
+          <td align=left bgcolor=#ffffff>&nbsp;{{Agama}}</td>
+        </tr>
+        <tr height=10>
+          <td width=25 align=left></td>
+            <td width=20 align=left></td>
+            <td width=151 align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>j.&nbsp;&nbsp;&nbsp;Alamat</font></td>
+            <td width=20 align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+            <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>&nbsp;{{alamat}}</font></td>
+        </tr>
+    </table>
+	<table width="737" border=0 cellpadding=0 cellspacing=0>
+        <tr height=5>
+          <td width="737" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>Dengan ini memberitahukan dengan hormat bahwa saya telah melangsungkan perkawinan yang pertama dengan seorang :</font></td>
+        </tr>
+    </table>
+	<table border=0 cellspacing=0 cellpadding=0>
+        <tr height=10>
+            <td width=105 align=left></td>
+            <td width=191 align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>a.&nbsp;&nbsp;Nama</font></td>
+            <td width=23 align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+            <td width="417" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>&nbsp;{{ístri}}</font></td>
+        </tr>
+        <tr height=10>
+            <td width=105 align=left></td>
+            <td width=191 align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>b.&nbsp;&nbsp;NIP / Nomor Identitas</font></td>
+            <td width=23 align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+            <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>&nbsp;{{nip}} / {{nik}}</font></td>
+        </tr>
+        <tr height=10>
+            <td width=105 align=left></td>
+            <td width=191 align=left bgcolor=#ffffff><p><font style=font-size:10pt face="arial narrow" color=#000000>c.&nbsp;&nbsp;Pangkat / Gol. Ruang</font></p></td>
+            <td width=23 align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+            <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>&nbsp;{{golru_pasangan}}</font></td>
+        </tr>
+        <tr height=10>
+            <td width=105 align=left></td>
+            <td width=191 align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>d.&nbsp;Jabatan / Pekerjaan </font></td>
+            <td width=23 align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+            <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>&nbsp;</font></td>
+        </tr>
+        <tr height=10>
+          <td align=left></td>
+          <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>e.&nbsp;Satuan Organisasi </font></td>
+          <td align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+          <td align=left bgcolor=#ffffff>&nbsp;</td>
+        </tr>
+        <tr height=10>
+          <td align=left></td>
+          <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>f.&nbsp;&nbsp;Tempat dan Tanggal Lahir</font></td>
+          <td align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+          <td align=left bgcolor=#ffffff>&nbsp;</td>
+        </tr>
+        <tr height=10>
+          <td align=left></td>
+          <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>g.&nbsp;Agama / Kepercayaan</font></td>
+          <td align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+          <td align=left bgcolor=#ffffff>&nbsp;{{Agama}}</td>
+        </tr>
+        <tr height=10>
+            <td width=105 align=left></td>
+            <td width=191 align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>h.&nbsp;Satuan Organisasi </font></td>
+            <td width=23 align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+            <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>&nbsp;{{nominatif.mk_tahun}} Tahun {{nominatif.mk_bulan}} Bulan</font></td>
+        </tr>
+    </table>
+    <table width="734" border=0 cellpadding=0 cellspacing=0>
+        <tr height=10>
+          <td  width="79"></td>
+          <td width="20" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>2.</font></td>
+          <td width="635" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>Sebagai tanda bukti bersama ini saya lampirkan :</font></td>
+        </tr>
+    </table>
+<table border=0 cellspacing=0 cellpadding=0>
+      <tr height=10>
+        <td width=104 align=left></td>
+        <td width=630 colspan="3" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>a.&nbsp;Salinan sah Surat Nikah / Akta Perkawinan dalam rangkap 2 (dua) dilegalisir KUA</font></td>
+      </tr>
+      <tr height=10>
+        <td width=104 align=left></td>
+        <td colspan="3" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>b.&nbsp;Pas Photo Hitam Putih Istri / Suami Saya Ukuran 2 x 3 sebanyak 3 (tiga) Lembar</font></td>
+      </tr>
+      <tr height=10>
+        <td width=104 align=left></td>
+        <td colspan="3" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>c.&nbsp;Foto copy SK Capeg, SK PNS, SK Terakhir</font></td>
+    </table>
+    <table width="734" border=0 cellpadding=0 cellspacing=0>
+      <tr height=10>
+        <td  width="79"></td>
+        <td width="20" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>3.</font></td>
+        <td width="635" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>Berhubung dengan ini, maka saya mengharapkan agar : </font></td>
+      </tr>
+</table>
+<table border=0 cellpadding=0 cellspacing=0>
+      <tr height=10>
+        <td width=104 align=left></td>
+        <td width=630 colspan="3" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>a.&nbsp;Dicatat Perkawinan tersebut dalam daftar keluarga saya.</font></td>
+      </tr>
+      <tr height=10>
+        <td width=104 align=left></td>
+        <td colspan="3" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>b.&nbsp;Diselesaikan permintaan KARIS / KARSU bagi Isteri / Suami saya.</font></td>
+      </tr>
+</table>
+<table width="734" border=0 cellpadding=0 cellspacing=0>
+  <tr height=10>
+    <td  width="79"></td>
+    <td width="20" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>4.</font></td>
+    <td width="635" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>Demikian Laporan ini saya buat dengan sesungguhnya untuk dapat dipergunakan sebagaimana mestinya.</font></td>
+  </tr>
+</table>
+    <br>
+
+    <table border=0 cellspacing=0 cellpadding=0>
+        <tr height=10>
+            <td width=430 align=left></td>
+            <td width=304  bgcolor=#ffffff>
+                <b><font style=font-size:10pt face="arial narrow" color=#000000>Hormat saya, </font></b>
+            </td>
+        </tr>
+    </table>
+<br /><br /><br /></br>
+    <table border=0 cellspacing=0 cellpadding=0>
+        <tr height=9>
+            <td width=430 align=left></td>
+            <td width=270 bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>NIP. </font></td>
+        </tr>
+        <tr height=9>
+            <td width=430 align=left></td>
+            <td width=270 bgcolor=#ffffff>&nbsp;</td>
+        </tr>
+        <tr height=9>
+            <td width=430 align=left></td>
+            <td width=270 bgcolor=#ffffff>&nbsp;</td>
+        </tr>
+    </table>
+    <br />
+    <table border=0 cellspacing=0 cellpadding=0>
+        <tr height=10>
+            <td width=5 align=left> <br></td>
+        </tr>
+    </table>
+    <p style="margin-bottom: 0in"><br/>
+    </p>
+    <p style="margin-bottom: 0in"><br/>
+    </p>
+    <p style="margin-bottom: 0in"><br/>
+    </p>
+    <p style="margin-bottom: 0in"><br/>
+    </p>
+    <p style="margin-bottom: 0in"><br/>
+    </p>
+    <p style="margin-bottom: 0in"><br/>
+    </p>
+    <p style="margin-bottom: 0in"><br/>
+    </p>
+    <p style="margin-bottom: 0in"><br/>
+    </p>
+    <p style="margin-bottom: 0in"><br/>
+    </p>
+    <p style="margin-bottom: 0in"><br/>
+    </p>
+    <p style="margin-bottom: 0in"><br/>
+    </p>
+    <p style="margin-bottom: 0in"><br/>
+    </p>
+    <table border=0 cellpadding=0 cellspacing=0>
+      <tr height=10>
+        <td width=62 align=left></td>
+        <td width=377 align=left></td>
+        <td width=128 align=left bgcolor=#ffffff>LAMPIRAN XXVI</td>
+        <td width=12 align=center bgcolor=#ffffff><strong>:</strong></td>
+        <td align=left bgcolor=#ffffff>SURAT EDARAN KEPALA BADAN ADMINISTRASI</td>
+      </tr>
+      <tr height=10>
+        <td width=62 align=left></td>
+        <td width=377 align=left>&nbsp;</td>
+        <td width=128 align=center bgcolor=#ffffff>&nbsp;</td>
+        <td width=12 align=left bgcolor=#ffffff>&nbsp;</td>
+        <td align=left bgcolor=#ffffff>KEPEGAWAIAN NEGARA</td>
+      </tr>
+      <tr height=10>
+        <td width=62 align=left></td>
+        <td width=377 align=left>&nbsp;</td>
+        <td width=128 align=center bgcolor=#ffffff>&nbsp;</td>
+        <td width=12 align=left bgcolor=#ffffff>&nbsp;</td>
+        <td align=left bgcolor=#ffffff>NOMOR : 08/SET/1983</td>
+      </tr>
+      <tr height=10>
+        <td width=62 align=left></td>
+        <td width=377 align=left>&nbsp;</td>
+        <td width=128 align=center bgcolor=#ffffff>&nbsp;</td>
+        <td width=12 align=left bgcolor=#ffffff>&nbsp;</td>
+        <td align=left bgcolor=#ffffff><div>
+          <div><u>TANGGAL : 26 APRIL 1983 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></div>
+        </div></td>
+      </tr>
+      <tr height=15>
+        <td width=62></td>
+        <td width=377></td>
+        <td width=128></td>
+        <td width=12 align=left><font style=font-size:10pt face="arial narrow" color=#000000></font></td>
+        <td width=351 align=left bgcolor=#ffffff><b> <font style=font-size:10pt face="arial narrow" color=#000000></font> </b></td>
+      </tr>
+    </table>
+<table border=0 cellpadding=0 cellspacing=0>
+  <tr height=10>
+    <td></td>
+    <td align=left bgcolor=#ffffff>&nbsp;</td>
+  </tr>
+  <tr height=10>
+    <td width="213"></td>
+    <td width="61" align=left bgcolor=#ffffff>&nbsp;</td>
+  </tr>
+  <tr height=10>
+    <td colspan="2"><font color="#000000" face="arial narrow">DAFAR KELUARGA PEGAWAI NEGERI SIPIL</font></td>
+  </tr>
+</table>
+<table width="734" border=0 cellpadding=0 cellspacing=0>
+  <tr height=10>
+    <td  width="79"></td>
+    <td width="20" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>I.</font></td>
+    <td width="635" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>KETERANGAN PERORANGAN :</font></td>
+  </tr>
+</table>
+<table border=0 cellpadding=0 cellspacing=0>
+  <tr height=10>
+    <td width=80 align=left></td>
+    <td width=25 align=left></td>
+    <td width=191 align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>1.&nbsp;&nbsp;Nama</font></td>
+    <td width=20 align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+    <td width="421" align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>&nbsp;{{data.nama}}</font></td>
+  </tr>
+  <tr height=10>
+    <td width=80 align=left></td>
+    <td width=25 align=left></td>
+    <td width=191 align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>2.&nbsp;&nbsp;NIP / Nomor Identitas</font></td>
+    <td width=20 align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+    <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>&nbsp;{{data.nip}}/{{data.tempat_lahir}}, {{data.tgllahir|date:"d-m-Y"}}</font></td>
+  </tr>
+  <tr height=10>
+    <td width=80 align=left></td>
+    <td width=25 align=left></td>
+    <td width=191 align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>3.&nbsp;&nbsp;Pangkat / Gol. Ruang</font></td>
+    <td width=20 align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+    <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>&nbsp;{{data.golongan}}/({{simbol.simbol}})</font></td>
+  </tr>
+  <tr height=10>
+    <td width=80 align=left></td>
+    <td width=25 align=left></td>
+    <td width=191 align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>4.&nbsp;&nbsp;Jataban / Perkerjaan</font></td>
+    <td width=20 align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+    <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>&nbsp;{{data.opd}}</font></td>
+  </tr>
+  <tr height=10>
+    <td align=left></td>
+    <td align=left></td>
+    <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000> 5. Satua Organisasi</font></td>
+    <td align=center bgcolor=#ffffff>:</td>
+    <td align=left bgcolor=#ffffff>&nbsp;</td>
+  </tr>
+  <tr height=10>
+    <td align=left></td>
+    <td align=left></td>
+    <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>6. Tempat dan Tanggal Lahir</font></td>
+    <td align=center bgcolor=#ffffff>:</td>
+    <td align=left bgcolor=#ffffff>&nbsp;</td>
+  </tr>
+  <tr height=10>
+    <td align=left></td>
+    <td align=left></td>
+    <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>7. Jenis Kelamin</font></td>
+    <td align=center bgcolor=#ffffff>:</td>
+    <td align=left bgcolor=#ffffff>&nbsp;</td>
+  </tr>
+  <tr height=10>
+    <td align=left></td>
+    <td align=left></td>
+    <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>8. Agama</font></td>
+    <td align=center bgcolor=#ffffff>:</td>
+    <td align=left bgcolor=#ffffff>&nbsp;</td>
+  </tr>
+  <tr height=10>
+    <td width=80 align=left></td>
+    <td width=25 align=left></td>
+    <td width=191 align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>9.&nbsp;&nbsp;Alamat</font></td>
+    <td width=20 align=center bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>:</font></td>
+    <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial" color=#000000>&nbsp;</font></td>
+  </tr>
+</table>
+<table width="734" border=0 cellpadding=0 cellspacing=0>
+  <tr height=10>
+    <td></td>
+    <td align=left bgcolor=#ffffff>&nbsp;</td>
+    <td align=left bgcolor=#ffffff>&nbsp;</td>
+  </tr>
+  <tr height=10>
+    <td></td>
+    <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>II.</font></td>
+    <td align=left bgcolor=#ffffff><font style=font-size:10pt face="arial narrow" color=#000000>SUSUNAN KELUARGA :</font></td>
+  </tr>
+  <tr height=10>
+    <td  width="79"></td>
+    <td width="20" align=left bgcolor=#ffffff>&nbsp;</td>
+    <td width="635" align=left bgcolor=#ffffff>A. ISTRI / SUAMI</td>
+  </tr>
+</table>
+<table width="937" cellpadding="7" cellspacing="0">
+  <col width="21"/>
+  <col width="147"/>
+  <col width="81"/>
+  <col width="90"/>
+  <col width="90"/>
+  <col width="62"/>
+  <col width="23"/>
+  <tr valign="top">
+    <td width="86">&nbsp;</td>
+    <td width="20" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="center" style="orphans: 2; widows: 2"> <font face="Calibri, serif"><font size="2" style="font-size: 11pt">No</font></font></p></td>
+    <td width="106" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="center" style="orphans: 2; widows: 2"> <font face="Calibri, serif"><font size="2" style="font-size: 11pt">NAMA</font></font></p></td>
+    <td width="75" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="center" style="orphans: 2; widows: 2"> <font face="Calibri, serif"><font size="2" style="font-size: 11pt">TANGGAL
+      LAHIR</font></font></p></td>
+    <td width="100" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="center" style="orphans: 2; widows: 2"> <font face="Calibri, serif"><font size="2" style="font-size: 11pt">TANGGAL
+      PERKAWINAN</font></font></p></td>
+    <td width="223" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="center" style="orphans: 2; widows: 2"> <font face="Calibri, serif"><font size="2" style="font-size: 11pt">ALAMAT</font></font></p></td>
+    <td width="107" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="center" style="orphans: 2; widows: 2"> <font face="Calibri, serif"><font size="2" style="font-size: 11pt">TTD
+      ISTERI / SUAMI</font></font></p></td>
+    <td width="106" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="center" style="orphans: 2; widows: 2"> <font face="Calibri, serif"><font size="2" style="font-size: 11pt">KET</font></font></p></td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td style="border: 1px solid #000000; padding: 0in 0.08in">&nbsp;</td>
+    <td style="border: 1px solid #000000; padding: 0in 0.08in"><p>&nbsp;{{ístri}}</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p></td>
+    <td style="border: 1px solid #000000; padding: 0in 0.08in">&nbsp;</td>
+    <td style="border: 1px solid #000000; padding: 0in 0.08in">&nbsp;</td>
+    <td style="border: 1px solid #000000; padding: 0in 0.08in"><p>&nbsp;</p>
+    <p>&nbsp;</p></td>
+    <td style="border: 1px solid #000000; padding: 0in 0.08in">&nbsp;</td>
+    <td style="border: 1px solid #000000; padding: 0in 0.08in">&nbsp;</td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">B. ANAK</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+<table width="946" cellpadding="7" cellspacing="0">
+  <col width="21"/>
+  <col width="206"/>
+  <col width="114"/>
+  <col width="168"/>
+  <col width="32"/>
+  <tr valign="top">
+    <td width="85">&nbsp;</td>
+    <td width="20" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="center" style="orphans: 2; widows: 2"> <font face="Calibri, serif"><font size="2" style="font-size: 11pt">No</font></font></p></td>
+    <td width="245" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="center" style="orphans: 2; widows: 2"> <font face="Calibri, serif"><font size="2" style="font-size: 11pt">NAMA</font></font></p></td>
+    <td width="88" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="center" style="orphans: 2; widows: 2"> <font face="Calibri, serif"><font size="2" style="font-size: 11pt">TANGGAL
+      LAHIR</font></font></p></td>
+    <td width="235" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="center" style="orphans: 2; widows: 2"> <font face="Calibri, serif"><font size="2" style="font-size: 11pt">NAMA
+      IBU / AYAH</font></font></p></td>
+    <td width="187" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="center" style="orphans: 2; widows: 2"> <font face="Calibri, serif"><font size="2" style="font-size: 11pt">KET</font></font></p></td>
+  </tr>
+  {% for data in anak%}
+  <tr valign="top">
+    <td width="85">&nbsp;</td>
+    <td width="20" style="border: 1px solid #000000; padding: 0in 0.08in"></td>
+    <td width="245" style="border: 1px solid #000000; padding: 0in 0.08in">{{data.title}}</td>
+    <td width="88" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="left" style="orphans: 2; widows: 2"> <br/>
+    </p></td>
+    <td width="235" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="left" style="orphans: 2; widows: 2"> <br/>
+    </p></td>
+    <td width="187" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="left" style="orphans: 2; widows: 2"> <br/>
+    </p></td>
+    {% endfor %}
+  </tr>
+  <tr valign="top">
+    <td width="85">&nbsp;</td>
+    <td width="20" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="left" style="orphans: 2; widows: 2"> <br/>
+    </p></td>
+    <td width="245" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="left" style="orphans: 2; widows: 2; margin-bottom: 0in"> <br/>
+    </p>
+      <p align="left" style="orphans: 2; widows: 2"><br/>
+      </p></td>
+    <td width="88" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="left" style="orphans: 2; widows: 2"> <br/>
+    </p></td>
+    <td width="235" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="left" style="orphans: 2; widows: 2"> <br/>
+    </p></td>
+    <td width="187" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="left" style="orphans: 2; widows: 2"> <br/>
+    </p></td>
+  </tr>
+  <tr valign="top">
+    <td width="85">&nbsp;</td>
+    <td width="20" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="left" style="orphans: 2; widows: 2"> <br/>
+    </p></td>
+    <td width="245" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="left" style="orphans: 2; widows: 2; margin-bottom: 0in"> <br/>
+    </p>
+      <p align="left" style="orphans: 2; widows: 2"><br/>
+      </p></td>
+    <td width="88" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="left" style="orphans: 2; widows: 2"> <br/>
+    </p></td>
+    <td width="235" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="left" style="orphans: 2; widows: 2"> <br/>
+    </p></td>
+    <td width="187" style="border: 1px solid #000000; padding: 0in 0.08in"><p align="left" style="orphans: 2; widows: 2"> <br/>
+    </p></td>
+  </tr>
+
+</table>
+<p style="margin-bottom: 0in"><br/>
+</p>
+<table border=0 cellpadding=0 cellspacing=0>
+  <tr height=9>
+    <td align=left>Jambi,</td>
+    <td bgcolor=#ffffff>&nbsp;</td>
+    <td bgcolor=#ffffff>Jambi,</td>
+  </tr>
+  <tr height=9>
+    <td width=430 align=left>Mengetahui,</td>
+    <td width=212 bgcolor=#ffffff>&nbsp;</td>
+    <td width=307 bgcolor=#ffffff>Yang Bersangkutan,</td>
+  </tr>
+  <tr height=9>
+    <td width=430 align=left></td>
+    <td width=212 bgcolor=#ffffff>&nbsp;</td>
+    <td width=307 bgcolor=#ffffff>&nbsp;</td>
+  </tr>
+  <tr height=9>
+    <td width=430 align=left></td>
+    <td width=212 bgcolor=#ffffff>&nbsp;</td>
+    <td width=307 bgcolor=#ffffff>&nbsp;</td>
+  </tr>
+</table>
+<p style="margin-bottom: 0in">&nbsp;</p>
+<p style="margin-bottom: 0in"><br/>
+
+</p>
+<p style="margin-bottom: 0in"><br/>
+
+</p>
+<p style="margin-bottom: 0in"><br/>
+
+</p>
+<p style="margin-bottom: 0in"><br/>
+
+</p>
+<p style="margin-bottom: 0in"><br/>
+
+</p>
+<p style="margin-bottom: 0in"><br/>
+
+</p>
+<p style="margin-bottom: 0in"><br/>
+
+</p>
+<p style="margin-bottom: 0in"><br/>
+
+</p>
+<p style="margin-bottom: 0in"><br/>
+
+</p>
+<p style="margin-bottom: 0in"><br/>
+
+</p>
+<p style="margin-bottom: 0in"><br/>
+
+</p>
+<p style="margin-bottom: 0in"><br/>
+
+</p>
+    
+
+LAMPIRAN I-A : SURAT EDARAN KEPALA BADAN ADMINISTRASI <br> KEPEGAWAIAN NEGARA <br>
+NOMOR : 08/SET/1983 <br>
+
+
+
 {% for data in anak %}
 <th scope="row" >{{forloop.counter}}</th>
 <td>{{data.title}}-{{data.field_anak_ke}}-{{data.field_status_anak}}</td>

@@ -19,7 +19,7 @@
           </li>
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-              <img src="{% static 'images/faces/face28.jpg' %}" alt="profile"/> {{page_obj.nama}}
+              <img src="http://data.bkd.jambiprov.go.id/{{user_picture}}" alt="profile"/> {{nama}}
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
               <a href="{% url 'cas_ng_logout' %}" class="dropdown-item"><i class="ti-power-off text-primary"></i>Logout</a>

@@ -1,9 +1,18 @@
 {% extends 'bootstrap/base.html' %}
 {% block content %}
+<h3>Kelengkapan Bahan</h3>
+{{formpegawai.as_table}}
+{{formpasangan.as_table}}
 
-<h1>Kelengkapan Bahan</h1>
-{{formpegawai.as_p}}
-{{formpasangan.as_p}}
-
-<a href="{%url 'apiload:ajukankarsu'%}"> Lanjutkan</a>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    <a href="{% url 'apiload:index' %}"> Back to profile</a>
+    {% endfor %}
+</ul>
+{% else %}
+<a href="{%url 'apiload:ajukankarsu'%}"> Lanjutkan </a>
+<a href="{%url 'apiload:formdownload'%}"> Unduh Formulir </a>
+{%endif%}
 {% endblock %}

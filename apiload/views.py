@@ -12,6 +12,7 @@ from dateutil.relativedelta import  relativedelta
 from django.http import HttpRequest, HttpResponse
 from xhtml2pdf import pisa
 from django.template.loader import get_template
+from django.contrib import messages
 
 
 datapokok = "http://data.bkd.jambiprov.go.id/rest-data-pokok/"#1X
@@ -108,13 +109,22 @@ def index(request):
         data = urlopen(datapokok + str(nip))
         json_pegawai= json.load(data)
         pddkan = urlopen(pendidikan + str(nip))
+        tgllhrstr = json_pegawai[0]['field_tanggal_lahir']
+        tmtbup = json_pegawai[0]['field_bup']
+        tgllhr = datetime.strptime(tgllhrstr,'%d-%m-%Y')
+        tmtpensiun = datetime.date(tgllhr + relativedelta(years=int(tmtbup)))
+
+
+
         json_pddkan = json.load(pddkan)
         jumlahpddk = len(json_pddkan)-1
         pdkakhir = list(json_pddkan)
         tingakatpddkan = pdkakhir[jumlahpddk]
         w = tingakatpddkan['field_tingkat_pendidikan']
-        print(w)
+
         context={
+            'bup' : tmtbup,
+            'pensiun': tmtpensiun,
             'user':request.user,
             'nama': json_pegawai[0]['field_nama'],
             'nip': nip,
@@ -267,7 +277,6 @@ def CetakFormView(request):
     json_pasangan = json.load(pasangans)
     anaks = urlopen(anak + str(nip))
     json_anak = json.load(anaks)
-
     template_path = 'apiload/kariskarsuform.html'
     context = {
         'anak':json_anak,
@@ -299,13 +308,18 @@ def CetakFormView(request):
 
 def CekBerkasKarsuView(request):
     nip = request.user
+    formpegawai = FormKarisKarsu()
+    formpasangan = FormIstri()
+    context = {
+            'formpegawai': formpegawai,
+            'formpasangan': formpasangan
+        }
+
     data = urlopen(pangkat + str(nip))
     json_pegawai = json.load(data)
     jmlhpkt = len(json_pegawai)-1
-
     bojo = urlopen(pasangan + str(nip))
     json_bojo = json.load(bojo)
-
     bojos = json_bojo[0]['moderation_state']
     cpns = json_pegawai[0]['moderation_state']
     pns = json_pegawai[1]['moderation_state']
@@ -317,13 +331,10 @@ def CekBerkasKarsuView(request):
             'formpegawai': formpegawai,
             'formpasangan': formpasangan
         }
-    else:
-        context = {
-            'formpegawai': formpegawai,
-            'formpasangan': formpasangan
-        }
         return render(request, 'apiload/kariskarsufix.html', context)
-    return render(request, 'apiload/kariskarsufix.html', context)
+    else:
+        messages.warning(request, "Data belum lengkap!!!")
+        return render(request, 'apiload/kariskarsufix.html', context)
 
 
 # def PengajuanKarisu(request):
