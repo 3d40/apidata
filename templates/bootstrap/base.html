@@ -202,7 +202,7 @@
             <div class="collapse" id="error">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="{% url 'apiload:karisu'%}"> Karis/Karsu </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> SPTHD </a></li>
+                <li class="nav-item"> <a class="nav-link" href="#"> SPTHD </a></li>
 <!--                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> Keluarga </a></li>-->
 <!--                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> DP3 </a></li>-->
 <!--                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> Hukuman Disiplin </a></li>-->
@@ -211,24 +211,12 @@
               </ul>
             </div>
           </li>
-           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
-              <i class="icon-paper menu-icon"></i>
-              <span class="menu-title">Layanan Aktif</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="error">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% url 'apiload:karisu'%}"> Karis/Karsu </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> SPTHD </a></li>
-<!--                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> Keluarga </a></li>-->
-<!--                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> DP3 </a></li>-->
-<!--                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> Hukuman Disiplin </a></li>-->
-<!--                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> Pendidikan </a></li>-->
-<!--                <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> Pelatihan/Diklat</a></li>-->
-              </ul>
-            </div>
-          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'apiload:listpegawai' %}">
+               <i class="mdi mdi-account-multiple menu-icon"></i>
+               <span class="menu-title">List Pensiun</span>
+             </a>
+           </li>
       </nav>
       <!-- partial -->
       <div class="main-panel">
@@ -237,7 +225,7 @@
             <div class="col-md-12 grid-margin">
               <div class="row">
                 <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                  <h3 class="font-weight-bold">Selamat Datang <label class="badge badge-danger">{{user.username}}</label></h3>
+                  <h3 class="font-weight-bold">Selamat Datang <label class="badge badge-danger">{{nama}}</label></h3>
                   <!-- <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 unread alerts!</span></h6> -->
                 </div>
                 
@@ -252,6 +240,5 @@
         <!-- partial -->
         {% include 'bootstrap/exclude/foot.html' %}
 </body>
-
 </html>
 

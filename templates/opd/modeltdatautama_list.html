@@ -1,0 +1,65 @@
+{% extends 'bootstrap/base.html' %}
+{% block content %}
+<form method="POST" >
+  {% csrf_token %}
+  Start Date  : <input type="date" name="start_date">
+  End Date  : <input type="date" name="end_date">
+  <input type="submit" value="Submit" class="btn btn-primary"/>
+            Ada <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">{{jumlah}} </span> Hasil Pencarian
+            <div class="table-responsive pt-3 " >
+              <table class="table table-dark">
+                <thead>
+                  <tr>
+                    <th>Nomor</th>
+                    <th>NIP</th>
+                    <th>Nama</th>
+                    <th>Pangkat Golongan</th>
+                    <th>Jabatan</th>
+                    <th>Tanggal Lahir</th>
+                    <th>BUP</th>
+                    <th>Estimasi Pensiun</th>
+                  </tr>
+                </thead>
+                {% for obj in object_list %}
+                <tbody>
+                  <tr>
+                    <td>
+                      {{forloop.counter}}
+                    </td>
+                    <td class="py-1"><a href="{% url 'apiload:index'%}">
+                        {{obj.nip}}
+                      </a>
+                    </td>
+                    <td>
+                      {{obj.nama}}
+                    </td>
+                    <td>
+                      ({{obj.gol}}) {{obj.gol.nama_pangkat}}
+                    </a>
+                      <td >
+                        {{obj.jabatan}}
+                      </a>
+                    </td>
+
+                    </td>
+                    <td >
+                        {{obj.tgl_lhr}}
+                      </a>
+                    </td>
+                    <td>
+                      {{obj.jabatan.bup}}
+                    <td>
+                     {{obj.tmt_pensiun}}
+                    </td>
+                  </tr>
+                </tbody>
+                {% endfor %}
+              </table> 
+              {% include 'bootstrap/paginator.html' %}
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    </form>
+{% endblock %}

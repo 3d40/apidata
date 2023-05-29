@@ -25,6 +25,7 @@ urlpatterns = [
     path('accounts/login', django_cas_ng.views.LoginView.as_view(), name='cas_ng_login'),
     path('accounts/logout', django_cas_ng.views.LogoutView.as_view(), name='cas_ng_logout'),
     # path('accounts/', include('uniauth.urls.cas_only', namespace='uniauth')),
+    path('', include('udin.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

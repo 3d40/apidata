@@ -25,5 +25,9 @@ urlpatterns = [
     path('userall', userall, name='userall'),
     path('datautama', IsiDataUatam, name='datautama'),
 
+    #OPD
+    path('listpegawai', PegawaiListView.as_view(), name='listpegawai'),
+
+
 ]
 

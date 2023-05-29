@@ -13,6 +13,7 @@ from django.http import HttpRequest, HttpResponse
 from xhtml2pdf import pisa
 from django.template.loader import get_template
 from django.contrib import messages
+from django.views.generic.list import ListView
 
 
 datapokok = "http://data.bkd.jambiprov.go.id/rest-data-pokok/"#1X
@@ -105,45 +106,49 @@ def index(request):
     idpkakhir.save()
 
     if request.user.is_authenticated:
-        nip = request.user
-        data = urlopen(datapokok + str(nip))
-        json_pegawai= json.load(data)
-        pddkan = urlopen(pendidikan + str(nip))
-        tgllhrstr = json_pegawai[0]['field_tanggal_lahir']
-        tmtbup = json_pegawai[0]['field_bup']
-        tgllhr = datetime.strptime(tgllhrstr,'%d-%m-%Y')
-        tmtpensiun = datetime.date(tgllhr + relativedelta(years=int(tmtbup)))
+        cekuser = get_object_or_404(ModelTUser, orang = request.user)
+        if cekuser.role == "":
+            cekuser.role = "Pegawai"
+            print(cekuser.role) 
+            nip = request.user
+            data = urlopen(datapokok + str(nip))
+            json_pegawai= json.load(data)
+            pddkan = urlopen(pendidikan + str(nip))
+            tgllhrstr = json_pegawai[0]['field_tanggal_lahir']
+            tmtbup = json_pegawai[0]['field_bup']
+            tgllhr = datetime.strptime(tgllhrstr,'%d-%m-%Y')
+            tmtpensiun = datetime.date(tgllhr + relativedelta(years=int(tmtbup)))
+            json_pddkan = json.load(pddkan)
+            jumlahpddk = len(json_pddkan)-1
+            pdkakhir = list(json_pddkan)
+            tingakatpddkan = pdkakhir[jumlahpddk]
+            w = tingakatpddkan['field_tingkat_pendidikan']
 
+            context={
+                'bup' : tmtbup,
+                'pensiun': tmtpensiun,
+                'user':request.user,
+                'nama': json_pegawai[0]['field_nama'],
+                'nip': nip,
+                'jabatan': json_pegawai[0]['field_jabatan'],
+                'pangkat': json_pegawai[0]['field_golongan'],
+                'opd': json_pegawai[0]['field_perangkat_daerah'],
+                'unitkerja': json_pegawai[0]['field_unit_kerja'],
+                'user_picture':json_pegawai[0]['user_picture'],
+                'golongan': json_pegawai[0]['field_golongan'],
+                'telpon': json_pegawai[0]['field_handphone'],
+                'alamat': json_pegawai[0]['field_alamat'],
+                'jenisjabatan': json_pegawai[0]['field_jenis_jabatan'],
+                'tgllahir': json_pegawai[0]['field_tanggal_lahir'],
+                'tempatlahir': json_pegawai[0]['field_tempat_lahir'],
+                'tingkat_pendidikan': w,
+                'mktahun' : idpkakhir.mktahun,
+                'mkbulan': idpkakhir.mkbulan,
+            }
+            return render(request, 'apiload/profile.html', context)
+        elif cekuser.role == "OPD":
+            return render(request, )
 
-
-        json_pddkan = json.load(pddkan)
-        jumlahpddk = len(json_pddkan)-1
-        pdkakhir = list(json_pddkan)
-        tingakatpddkan = pdkakhir[jumlahpddk]
-        w = tingakatpddkan['field_tingkat_pendidikan']
-
-        context={
-            'bup' : tmtbup,
-            'pensiun': tmtpensiun,
-            'user':request.user,
-            'nama': json_pegawai[0]['field_nama'],
-            'nip': nip,
-            'jabatan': json_pegawai[0]['field_jabatan'],
-            'pangkat': json_pegawai[0]['field_golongan'],
-            'opd': json_pegawai[0]['field_perangkat_daerah'],
-            'unitkerja': json_pegawai[0]['field_unit_kerja'],
-            'user_picture':json_pegawai[0]['user_picture'],
-            'golongan': json_pegawai[0]['field_golongan'],
-            'telpon': json_pegawai[0]['field_handphone'],
-            'alamat': json_pegawai[0]['field_alamat'],
-            'jenisjabatan': json_pegawai[0]['field_jenis_jabatan'],
-            'tgllahir': json_pegawai[0]['field_tanggal_lahir'],
-            'tempatlahir': json_pegawai[0]['field_tempat_lahir'],
-            'tingkat_pendidikan': w,
-            'mktahun' : idpkakhir.mktahun,
-            'mkbulan': idpkakhir.mkbulan,
-        }
-        return render(request, 'apiload/profile.html', context)
     else:
         return redirect('cas_ng_login')
 
@@ -153,7 +158,8 @@ def ping(request: HttpRequest) -> HttpResponse:
 def RiwayatPangkatView(request):
     nip = request.user
     data = urlopen(pangkat + str(nip))
-    json_pegawai = json.load(data)  
+    json_pegawai = json.load(data)
+    print(json_pegawai)  
     context = {
         'data':json_pegawai
         }
@@ -379,4 +385,20 @@ def IsiDataUatam(requset):
     return HttpResponse("Banyak Nian")
 
 
-
+class PegawaiListView(ListView):
+    template_name = 'opd/modeltdatautama_list.html'
+    
+    def get(self, request):
+        nip = self.request.user
+        cekuser = ModelTUser.objects.get(orang=self.request.user)
+        jenis = cekuser.role
+        if jenis == "":
+            # return redirect ('apiload:index')
+            pegawai = ModelTDataUtama.objects.filter(perangkat_daerah = 'Badan Kepegawaian Daerah')
+            context = {'object_list': pegawai}
+            return render(request,'opd/modeltdatautama_list.html',context)
+        elif  jenis == "OPD":
+            pegawai = ModelTDataUtama.objects.filter(perangkat_daerah = 'Badan Kepegawaian Daerah')
+            context = {'object_list': pegawai}
+            return render(request,'opd/modeltdatautama_list.html',context)
+    
